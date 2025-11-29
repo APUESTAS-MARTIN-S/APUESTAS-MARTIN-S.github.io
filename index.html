@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nombre de la página</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Descripción corta de tu página." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --card: #10172a;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59,130,246,0.12);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148,163,184,0.2);
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 35px rgba(15,23,42,0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 960px;
+      background: linear-gradient(145deg, rgba(15,23,42,0.92), rgba(15,23,42,0.96));
+      border-radius: 24px;
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decoración de fondo suave */
+    .shell::before,
+    .shell::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(40px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .shell::before {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(59,130,246,0.75), transparent 60%);
+      top: -80px;
+      right: -60px;
+    }
+    .shell::after {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(34,197,94,0.6), transparent 60%);
+      bottom: -70px;
+      left: -40px;
+    }
+
+    /* Cabecera pequeña con logo y estado */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #60a5fa, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+      box-shadow: 0 0 0 1px rgba(15,23,42,0.9);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-text-main {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.03em;
+    }
+
+    .logo-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.9);
+    }
+
+    /* Layout principal */
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr);
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .shell {
+        padding: 18px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Columna izquierda: texto principal */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+      width: fit-content;
+    }
+
+    .eyebrow span {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #e5e7eb;
+    }
+
+    .title {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: clamp(28px, 4vw, 34px);
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+    }
+
+    .title strong {
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, background 0.1s ease-out, border-color 0.1s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      box-shadow: 0 12px 25px rgba(37,99,235,0.5);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(37,99,235,0.65);
+    }
+
+    .btn-ghost {
+      background: rgba(15,23,42,0.9);
+      border-color: rgba(148,163,184,0.5);
+      color: var(--text-main);
+    }
+    .btn-ghost:hover {
+      background: rgba(15,23,42,0.95);
+      border-color: #e5e7eb;
+    }
+
+    /* Lista de ventajas / puntos */
+    .bullets {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      max-width: 460px;
+    }
+
+    @media (max-width: 640px) {
+      .bullets {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bullet {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .bullet-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    /* Columna derecha: tarjeta con info “de pago”, “planes” o similar */
+    .card {
+      background: radial-gradient(circle at top right, #1d283a, #020617 70%);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #bfdbfe;
+      font-size: 11px;
+      width: fit-content;
+    }
+
+    .card-title {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 18px;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .price-main {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 26px;
+    }
+
+    .price-main span {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-left: 4px;
+      font-weight: 400;
+    }
+
+    .chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(22,163,74,0.16);
+      border: 1px solid rgba(34,197,94,0.5);
+      font-size: 11px;
+      color: #bbf7d0;
+      white-space: nowrap;
+    }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+
+    .card-list-icon {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(34,197,94,0.15);
+      color: #4ade80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      margin-top: 2px;
+    }
+
+    .card-footer {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-footer small {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .card-note {
+      font-size: 11px;
+      color: #e5e7eb;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(15,23,42,0.9);
+      border: 1px dashed rgba(148,163,184,0.7);
+    }
+
+    .card-note strong {
+      color: var(--accent);
+    }
+
+    .card-cta {
+      margin-top: 6px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-cta .btn {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    /* Pie mini */
+    .mini-footer {
+      margin-top: 18px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-mark">K</div>
+        <div class="logo-text">
+          <div class="logo-text-main">Tu Marca</div>
+          <div class="logo-text-sub">Texto corto o slogan</div>
+        </div>
+      </div>
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>Disponible hoy</span>
+      </div>
+    </header>
+
+    <section class="grid">
+      <!-- Columna izquierda -->
+      <div class="hero">
+        <div class="eyebrow">
+          <span>Minimal · Claro · Directo</span>
+        </div>
+
+        <h1 class="title">
+          Página <strong>simple y profesional</strong><br>
+          lista para recibir a tus usuarios.
+        </h1>
+
+        <p class="subtitle">
+          Aquí puedes explicar en una o dos frases qué ofreces:
+          servicio, suscripción, pago del día, registro, etc. Mantén el mensaje
+          claro y directo.
+        </p>
+
+        <div class="actions">
+          <a href="#accion-principal" class="btn btn-primary">
+            Acción principal
+          </a>
+          <a href="#mas-info" class="btn btn-ghost">
+            Ver más detalles
+          </a>
+        </div>
+
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon">✓</div>
+            <span>Texto corto de confianza: pagos seguros, soporte rápido, etc.</span>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon">✓</div>
+            <span>Funciona bien en móviles y en escritorio.</span>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon">✓</div>
+            <span>Diseño minimalista, sin recargar la vista ni distraer.</span>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon">✓</div>
+            <span>Fácil de adaptar: solo cambias textos y colores.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna derecha -->
+      <aside class="card" id="accion-principal">
+        <div class="card-badge">
+          • Resumen
+        </div>
+
+        <h2 class="card-title">Sección principal (pago / registro / plan)</h2>
+        <p class="card-sub">
+          Usa esta tarjeta para poner el bloque más importante: datos de pago del día, un plan único o la acción que te interesa.
+        </p>
+
+        <div class="price-row">
+          <div class="price-main">
+            $99.000 <span>/ ejemplo</span>
+          </div>
+          <div class="chip">
+            Sin letras pequeñas, claro y directo
+          </div>
+        </div>
+
+        <ul class="card-list">
+          <li>
+            <div class="card-list-icon">✓</div>
+            <div>Beneficio 1: explica qué incluye o qué resuelve.</div>
+          </li>
+          <li>
+            <div class="card-list-icon">✓</div>
+            <div>Beneficio 2: algo concreto (ej. acceso inmediato, soporte, etc.).</div>
+          </li>
+          <li>
+            <div class="card-list-icon">✓</div>
+            <div>Beneficio 3: resuelve una objeción común del usuario.</div>
+          </li>
+        </ul>
+
+        <div class="card-footer">
+          <div class="card-cta">
+            <a href="#" class="btn btn-primary">Continuar</a>
+            <a href="#mas-info" class="btn btn-ghost">Más info</a>
+          </div>
+          <small>
+            Aquí puedes poner una nota corta sobre métodos de pago, horarios o condiciones básicas.
+          </small>
+          <div class="card-note">
+            Ejemplo: <strong>si ya realizaste el pago</strong>, conserva tu comprobante y comparte tu número de referencia por WhatsApp.
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div id="mas-info" class="mini-footer">
+      Puedes usar esta base como landing principal y más abajo (otro día) añadir secciones extra
+      con preguntas frecuentes, políticas o enlaces secundarios.
+    </div>
+  </main>
+</body>
+</html>
