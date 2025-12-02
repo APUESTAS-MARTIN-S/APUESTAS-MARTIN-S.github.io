@@ -120,19 +120,23 @@
       gap: 10px;
     }
 
-    .logo-mark {
+    .logo-mark-img {
       width: 36px;
       height: 36px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #22c55e, #15803d);
+      overflow: hidden;
+      border: 1px solid rgba(34,197,94,0.65);
+      box-shadow: 0 0 0 1px rgba(3,24,17,0.9);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-      color: white;
-      box-shadow: 0 0 0 1px rgba(3,24,17,0.9);
+      background: #064e3b;
+    }
+
+    .logo-mark-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .logo-text-main {
@@ -268,7 +272,7 @@
       font-weight: 600;
     }
 
-    /* BUSCADOR DE BOLETA */
+    /* BUSCADOR + LISTA */
     .finder-section {
       background: rgba(1,17,13,0.98);
       border-radius: 18px;
@@ -332,9 +336,10 @@
 
     .finder-result {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr);
       gap: 12px;
       align-items: flex-start;
+      margin-bottom: 10px;
     }
 
     @media (max-width: 720px) {
@@ -385,6 +390,12 @@
       color: #fee2e2;
     }
 
+    .finder-status-pill.res {
+      background: rgba(250,204,21,0.16);
+      border-color: rgba(250,204,21,0.9);
+      color: #fef3c7;
+    }
+
     .finder-status-pill.neutral {
       background: rgba(1,17,13,0.9);
       border-color: rgba(148,163,184,0.6);
@@ -398,12 +409,6 @@
 
     .finder-number-picker {
       margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .finder-number-picker-label {
       font-size: 12px;
       color: var(--text-muted);
     }
@@ -415,7 +420,7 @@
       align-items: center;
     }
 
-    /* DINO DENTRO DEL BLOQUE DERECHO, ENCIMA DE BOTONES */
+    /* DINO ENCIMA DE BOTONES */
     .dino-inline-img {
       max-width: 230px;
       width: 100%;
@@ -481,15 +486,14 @@
       border-color: #e5e7eb;
     }
 
-    /* TABLA COMPLETA */
+    /* TABLA INTERACTIVA 00–99 */
     .tickets-table-wrapper {
       margin-top: 8px;
-      max-height: 280px;
+      max-height: 360px;
       overflow: auto;
       border-radius: 12px;
       border: 1px solid rgba(7,43,29,0.95);
       background: #020f0b;
-      display: none;
     }
 
     .tickets-table {
@@ -501,20 +505,20 @@
     .tickets-table thead {
       position: sticky;
       top: 0;
-      background: #022c22;
+      background: #059669;
       z-index: 1;
     }
 
     .tickets-table th,
     .tickets-table td {
-      padding: 6px 10px;
+      padding: 7px 8px;
       text-align: left;
     }
 
     .tickets-table th {
       font-weight: 600;
-      background: #022c22;
-      color: #e5e7eb;
+      color: #f9fafb;
+      border-bottom: 1px solid #022c22;
     }
 
     .tickets-table tbody tr:nth-child(even) {
@@ -525,21 +529,90 @@
       background: #031611;
     }
 
-    .badge-status {
-      display: inline-block;
-      padding: 2px 8px;
+    .num-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      padding: 6px 0;
       border-radius: 999px;
-      font-size: 11px;
+      border: 1px solid rgba(34,197,94,0.7);
+      background: radial-gradient(circle at 30% 20%, #065f46, #022c22);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 15px;
+      cursor: pointer;
     }
 
-    .badge-status.ok {
+    .num-pill.selected {
+      box-shadow: 0 0 0 2px #ecfeff, 0 0 0 3px #22c55e;
+    }
+
+    .cell-input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: #020f0b;
+      color: var(--text-main);
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+
+    .cell-input:focus {
+      outline: none;
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 0 1px var(--accent-strong);
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid transparent;
+      text-align: center;
+      min-width: 80px;
+    }
+
+    .badge-status.disponible {
       background: rgba(22,163,74,0.18);
+      border-color: rgba(34,197,94,0.8);
       color: #bbf7d0;
     }
 
-    .badge-status.out {
-      background: rgba(248,113,113,0.16);
-      color: #fee2e2;
+    .badge-status.reservado {
+      background: rgba(251,191,36,0.16);
+      border-color: rgba(250,204,21,0.9);
+      color: #fef3c7;
+    }
+
+    .badge-status.pagado {
+      background: rgba(37,99,235,0.18);
+      border-color: rgba(37,99,235,0.9);
+      color: #dbeafe;
+    }
+
+    .btn-row {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.7);
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #f9fafb;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-row.disabled {
+      opacity: 0.5;
+      cursor: default;
+      background: #1f2937;
+      border-color: rgba(107,114,128,0.8);
+    }
+
+    .hint-cell {
+      font-size: 10px;
+      color: var(--text-muted);
+      padding-top: 4px;
     }
 
     /* PAGOS */
@@ -624,13 +697,13 @@
       position: fixed;
       bottom: 14px;
       right: 14px;
-      width: 260px;
+      width: 290px;
       max-width: calc(100% - 28px);
       background: #020f0b;
       border-radius: 14px;
       border: 1px solid rgba(22,163,74,0.7);
       box-shadow: 0 16px 32px rgba(1,15,11,0.95);
-      padding: 10px 12px;
+      padding: 10px 12px 12px;
       font-size: 12px;
       color: var(--text-main);
       z-index: 60;
@@ -648,20 +721,18 @@
       margin-bottom: 6px;
     }
 
-    #admin-category,
-    #admin-select {
+    .admin-select {
       width: 100%;
       padding: 5px 8px;
       border-radius: 999px;
       border: 1px solid rgba(34,197,94,0.7);
       background: #02130f;
       color: var(--text-main);
-      font-size: 13px;
+      font-size: 12px;
       margin-bottom: 6px;
     }
 
-    #admin-category:focus,
-    #admin-select:focus {
+    .admin-select:focus {
       outline: none;
       border-color: var(--accent-strong);
       box-shadow: 0 0 0 1px var(--accent-strong);
@@ -669,6 +740,42 @@
 
     #admin-status {
       margin-bottom: 6px;
+    }
+
+    .admin-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .admin-btn-small {
+      padding: 5px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: #020f0b;
+      color: #e5e7eb;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .admin-btn-small:hover {
+      background: #022c22;
+    }
+
+    #admin-export {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.7);
+      background: #022c22;
+      color: #bbf7d0;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    #admin-export:hover {
+      background: #065f46;
     }
 
     #admin-close {
@@ -698,7 +805,9 @@
       <!-- MARCA -->
       <header class="header-brand">
         <div class="logo">
-          <div class="logo-mark">M</div>
+          <div class="logo-mark-img">
+            <img src="dino.jpg" alt="Dino Martin's">
+          </div>
           <div>
             <div class="logo-text-main">Apuestas Martin's</div>
             <div class="logo-text-sub">Boletas Chontico</div>
@@ -720,7 +829,7 @@
             Valores en <strong>CLP</strong> y <strong>COP</strong>.
           </h2>
           <p class="subtitle">
-            Elige la categoría de Chontico, selecciona el número y revisa disponibilidad.
+            Elige el tipo (día o noche), el día de la semana y aparta un número del 00 al 99.
           </p>
         </div>
 
@@ -728,57 +837,54 @@
           <div class="hero-right-title">Valores por tipo de boleta</div>
           <div class="pill-row">
             <div class="pill">
-              <strong>CHONTICO DOMINGO DÍA</strong><br>
-              <span>$1.000 CLP · $4.000 COP</span>
+              <strong>CHONTICO DÍA</strong><br>
+              <span>Lunes a Sábado: $2.000 CLP · $8.000 COP<br>Domingo: $1.000 CLP · $4.000 COP</span>
             </div>
             <div class="pill">
-              <strong>CHONTICO SÁBADO Y DOMINGO NOCHE</strong><br>
-              <span>$3.000 CLP · $12.000 COP</span>
-            </div>
-            <div class="pill">
-              <strong>CHONTICO DE LUNES A VIERNES NOCHE</strong><br>
-              <span>$2.000 CLP · $8.000 COP</span>
-            </div>
-            <div class="pill">
-              <strong>CHONTICO DE LUNES A SÁBADO DÍA</strong><br>
-              <span>$2.000 CLP · $8.000 COP</span>
+              <strong>CHONTICO NOCHE</strong><br>
+              <span>Lunes a Viernes: $2.000 CLP · $8.000 COP<br>Sábado y Domingo: $3.000 CLP · $12.000 COP</span>
             </div>
           </div>
         </aside>
       </section>
 
-      <!-- BUSCADOR -->
+      <!-- SECCIÓN PRINCIPAL -->
       <section class="finder-section">
         <div class="finder-header">
           <h3 class="finder-title">Número de boleta</h3>
           <p class="finder-note">
-            Categorías de Chontico · Números del 00 al 99.
+            Chontico Día y Noche · Listas independientes por día · Números del 00 al 99.
           </p>
         </div>
 
         <div class="finder-controls-row">
-          <span class="finder-label">Categoría:</span>
-          <select id="category-select" class="finder-select"></select>
+          <span class="finder-label">Tipo:</span>
+          <select id="tipo-select" class="finder-select"></select>
+
+          <span class="finder-label">Día:</span>
+          <select id="dia-select" class="finder-select"></select>
         </div>
 
         <div class="finder-result">
           <div class="finder-card">
-            <div class="finder-number-label">Categoría</div>
-            <div id="finder-category-label" class="finder-info">—</div>
+            <div class="finder-number-label">Tipo seleccionado</div>
+            <div id="finder-tipo-label" class="finder-info">—</div>
+
+            <div class="finder-number-label">Día seleccionado</div>
+            <div id="finder-dia-label" class="finder-info">—</div>
 
             <div class="finder-number-label">Número seleccionado</div>
             <div id="finder-number" class="finder-number">--</div>
 
             <div id="finder-status-pill" class="finder-status-pill neutral">
-              Selecciona un número para ver su disponibilidad
+              Toca un número en la lista para ver su estado.
             </div>
             <div id="finder-info" class="finder-info">
               Estado actual del número.
             </div>
 
             <div class="finder-number-picker">
-              <span class="finder-number-picker-label">Elegir número:</span>
-              <select id="ticket-select" class="finder-select" aria-label="Número de boleta"></select>
+              Números de la lista: 00 al 99.
             </div>
           </div>
 
@@ -789,24 +895,30 @@
             <a id="reserve-button" href="#" target="_blank" class="btn btn-primary disabled" aria-disabled="true">
               Reservar por WhatsApp
             </a>
-            <button id="toggle-table" type="button" class="btn btn-secondary">
-              Ver lista completa de números
+            <button id="clear-selection" type="button" class="btn btn-secondary">
+              Limpiar selección
             </button>
           </div>
         </div>
 
-        <!-- TABLA COMPLETA -->
-        <div class="tickets-table-wrapper" id="tickets-table-wrapper" aria-hidden="true">
+        <!-- TABLA INTERACTIVA -->
+        <div class="tickets-table-wrapper" id="tickets-table-wrapper">
           <table class="tickets-table">
             <thead>
               <tr>
-                <th>Número</th>
-                <th>Disponibilidad</th>
+                <th style="width:70px;">Número</th>
+                <th>Nombre</th>
+                <th>Celular</th>
+                <th style="width:110px;">Estado</th>
+                <th style="width:110px;">Acción</th>
               </tr>
             </thead>
             <tbody id="tickets-table-body">
             </tbody>
           </table>
+        </div>
+        <div class="hint-cell">
+          Celular: 9 dígitos (Chile) o 10 dígitos (Colombia). Solo números.
         </div>
       </section>
 
@@ -867,131 +979,200 @@
     <button id="admin-close" type="button" title="Cerrar">×</button>
     <div id="admin-panel-title">Modo administrador</div>
     <div id="admin-panel-note">
-      Marca números como disponibles u ocupados por categoría.
+      Cambia estados, limpia datos y descarga reservas en CSV (Excel). Atajo: <strong>Ctrl + Shift + A</strong>.
     </div>
-    <select id="admin-category"></select>
-    <select id="admin-select"></select>
+
+    <select id="admin-tipo" class="admin-select"></select>
+    <select id="admin-dia" class="admin-select"></select>
+    <select id="admin-select" class="admin-select"></select>
+
     <div id="admin-status"></div>
-    <button id="admin-toggle-status" type="button" class="btn btn-secondary" style="width:100%; margin-top:4px;">
-      Cambiar estado
-    </button>
-    <div style="margin-top:6px; font-size:10px; color:#9ca3af;">
-      Atajo: <strong>Ctrl + Shift + A</strong>. Cambios guardados en este dispositivo.
+
+    <div class="admin-buttons">
+      <button id="admin-disponible" class="admin-btn-small">Disponible</button>
+      <button id="admin-reservado" class="admin-btn-small">Reservado</button>
+      <button id="admin-pagado" class="admin-btn-small">Pagado</button>
     </div>
+    <button id="admin-clear-name" class="admin-btn-small" style="width:100%; margin-bottom:6px;">
+      Borrar nombre y celular
+    </button>
+
+    <button id="admin-export">Descargar CSV (Excel)</button>
   </div>
 
   <script>
     (function () {
       const WHATSAPP_NUMBER = "573125172779";
-      const TOTAL_NUMBERS = 100; // 00 a 99
+      const TOTAL_NUMBERS = 100; // 00–99
+      const STORAGE_KEY = "boletasChonticoEstados_v5";
 
-      const CATEGORIES = [
-        { id: "domingo-dia", label: "CHONTICO DOMINGO DÍA" },
-        { id: "sab-dom-noche", label: "CHONTICO SÁBADO Y DOMINGO NOCHE" },
-        { id: "lun-vie-noche", label: "CHONTICO DE LUNES A VIERNES NOCHE" },
-        { id: "lun-sab-dia", label: "CHONTICO DE LUNES A SÁBADO DÍA" }
+      const TIPOS = [
+        { id: "dia",   label: "Chontico Día" },
+        { id: "noche", label: "Chontico Noche" }
       ];
 
-      const STORAGE_KEY = "boletasChonticoEstados_v3";
+      const DIAS = [
+        { id: "lun", label: "Lunes" },
+        { id: "mar", label: "Martes" },
+        { id: "mie", label: "Miércoles" },
+        { id: "jue", label: "Jueves" },
+        { id: "vie", label: "Viernes" },
+        { id: "sab", label: "Sábado" },
+        { id: "dom", label: "Domingo" }
+      ];
 
-      const categorySelect = document.getElementById("category-select");
-      const ticketSelect = document.getElementById("ticket-select");
-      const finderCategoryLabel = document.getElementById("finder-category-label");
+      const ESTADOS = {
+        DISPONIBLE: "disponible",
+        RESERVADO: "reservado",
+        PAGADO: "pagado"
+      };
+
+      const tipoSelect = document.getElementById("tipo-select");
+      const diaSelect = document.getElementById("dia-select");
+
+      const finderTipoLabel = document.getElementById("finder-tipo-label");
+      const finderDiaLabel = document.getElementById("finder-dia-label");
       const finderNumber = document.getElementById("finder-number");
       const finderStatusPill = document.getElementById("finder-status-pill");
       const finderInfo = document.getElementById("finder-info");
+      const clearSelectionBtn = document.getElementById("clear-selection");
       const reserveButton = document.getElementById("reserve-button");
-      const toggleTableBtn = document.getElementById("toggle-table");
-      const tableWrapper = document.getElementById("tickets-table-wrapper");
+
       const tableBody = document.getElementById("tickets-table-body");
 
       const adminTrigger = document.getElementById("admin-trigger");
       const adminPanel = document.getElementById("admin-panel");
-      const adminCategorySelect = document.getElementById("admin-category");
+      const adminTipoSelect = document.getElementById("admin-tipo");
+      const adminDiaSelect = document.getElementById("admin-dia");
       const adminSelect = document.getElementById("admin-select");
       const adminStatus = document.getElementById("admin-status");
-      const adminToggleStatus = document.getElementById("admin-toggle-status");
+      const adminDisponible = document.getElementById("admin-disponible");
+      const adminReservado = document.getElementById("admin-reservado");
+      const adminPagado = document.getElementById("admin-pagado");
+      const adminClearName = document.getElementById("admin-clear-name");
+      const adminExport = document.getElementById("admin-export");
       const adminClose = document.getElementById("admin-close");
 
-      let availability = {};
+      let data = {}; // data[tipoId][diaId][index] = {estado, nombre, celular}
+      let selectedIndex = null;
 
-      function formatTicketNumber(n) {
+      function formatNumber(n) {
         return n.toString().padStart(2, "0");
       }
 
-      function loadAvailability() {
+      function ensureStructure() {
+        TIPOS.forEach(t => {
+          if (!data[t.id]) data[t.id] = {};
+          DIAS.forEach(d => {
+            if (!Array.isArray(data[t.id][d.id]) || data[t.id][d.id].length !== TOTAL_NUMBERS) {
+              const arr = new Array(TOTAL_NUMBERS);
+              for (let i = 0; i < TOTAL_NUMBERS; i++) {
+                arr[i] = { estado: ESTADOS.DISPONIBLE, nombre: "", celular: "" };
+              }
+              data[t.id][d.id] = arr;
+            }
+          });
+        });
+      }
+
+      function loadData() {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           try {
             const parsed = JSON.parse(saved);
             if (parsed && typeof parsed === "object") {
-              availability = parsed;
+              data = parsed;
             }
           } catch (e) {}
         }
-        CATEGORIES.forEach(cat => {
-          if (!Array.isArray(availability[cat.id]) || availability[cat.id].length !== TOTAL_NUMBERS) {
-            availability[cat.id] = new Array(TOTAL_NUMBERS).fill("disponible");
-          }
-        });
+        ensureStructure();
       }
 
-      function saveAvailability() {
+      function saveData() {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(availability));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         } catch (e) {}
       }
 
-      function initCategorySelects() {
-        CATEGORIES.forEach(cat => {
-          const opt1 = document.createElement("option");
-          opt1.value = cat.id;
-          opt1.textContent = cat.label;
-          categorySelect.appendChild(opt1);
+      function initSelectors() {
+        TIPOS.forEach(t => {
+          const opt = document.createElement("option");
+          opt.value = t.id;
+          opt.textContent = t.label;
+          tipoSelect.appendChild(opt);
 
-          const opt2 = document.createElement("option");
-          opt2.value = cat.id;
-          opt2.textContent = cat.label;
-          adminCategorySelect.appendChild(opt2);
+          const optAdmin = document.createElement("option");
+          optAdmin.value = t.id;
+          optAdmin.textContent = t.label;
+          adminTipoSelect.appendChild(optAdmin);
         });
-      }
 
-      function initNumberSelects() {
+        DIAS.forEach(d => {
+          const opt = document.createElement("option");
+          opt.value = d.id;
+          opt.textContent = d.label;
+          diaSelect.appendChild(opt);
+
+          const optAdmin = document.createElement("option");
+          optAdmin.value = d.id;
+          optAdmin.textContent = d.label;
+          adminDiaSelect.appendChild(optAdmin);
+        });
+
         for (let i = 0; i < TOTAL_NUMBERS; i++) {
-          const value = i.toString();
-          const label = formatTicketNumber(i);
-
-          const option1 = document.createElement("option");
-          option1.value = value;
-          option1.textContent = label;
-          ticketSelect.appendChild(option1);
-
-          const option2 = document.createElement("option");
-          option2.value = value;
-          option2.textContent = label;
-          adminSelect.appendChild(option2);
+          const optAdmin = document.createElement("option");
+          optAdmin.value = String(i);
+          optAdmin.textContent = formatNumber(i);
+          adminSelect.appendChild(optAdmin);
         }
+
+        tipoSelect.value = TIPOS[0].id;
+        diaSelect.value = DIAS[0].id;
+        adminTipoSelect.value = TIPOS[0].id;
+        adminDiaSelect.value = DIAS[0].id;
+        adminSelect.value = "0";
       }
 
-      function getCurrentCategoryId() {
-        return categorySelect.value || CATEGORIES[0].id;
+      function currentTipoId() {
+        return tipoSelect.value || TIPOS[0].id;
       }
 
-      function getCategoryLabelById(id) {
-        const cat = CATEGORIES.find(c => c.id === id);
-        return cat ? cat.label : id;
+      function currentDiaId() {
+        return diaSelect.value || DIAS[0].id;
       }
 
-      function updateFinderView() {
-        const catId = getCurrentCategoryId();
-        const catLabel = getCategoryLabelById(catId);
-        finderCategoryLabel.textContent = catLabel;
+      function labelTipo(id) {
+        const t = TIPOS.find(x => x.id === id);
+        return t ? t.label : id;
+      }
 
-        const index = parseInt(ticketSelect.value, 10);
-        if (isNaN(index)) {
+      function labelDia(id) {
+        const d = DIAS.find(x => x.id === id);
+        return d ? d.label : id;
+      }
+
+      function refreshFinderLabels() {
+        const tId = currentTipoId();
+        const dId = currentDiaId();
+        finderTipoLabel.textContent = labelTipo(tId);
+        finderDiaLabel.textContent = labelDia(dId);
+      }
+
+      function statusToText(estado) {
+        if (estado === ESTADOS.RESERVADO) return "Reservado";
+        if (estado === ESTADOS.PAGADO) return "Pagado";
+        return "Disponible";
+      }
+
+      function updateFinderFromSelection() {
+        const tId = currentTipoId();
+        const dId = currentDiaId();
+        refreshFinderLabels();
+
+        if (selectedIndex == null) {
           finderNumber.textContent = "--";
           finderStatusPill.className = "finder-status-pill neutral";
-          finderStatusPill.textContent = "Selecciona un número para ver su disponibilidad";
+          finderStatusPill.textContent = "Toca un número en la lista para ver su estado.";
           finderInfo.textContent = "Estado actual del número.";
           reserveButton.classList.add("disabled");
           reserveButton.setAttribute("aria-disabled", "true");
@@ -999,122 +1180,312 @@
           return;
         }
 
-        const numText = formatTicketNumber(index);
-        const status = availability[catId][index];
-
+        const registro = data[tId][dId][selectedIndex];
+        const numText = formatNumber(selectedIndex);
         finderNumber.textContent = numText;
 
-        finderStatusPill.classList.remove("ok", "out", "neutral");
-        if (status === "ocupado") {
-          finderStatusPill.classList.add("out");
-          finderStatusPill.textContent = "Ocupado";
-          finderInfo.textContent = "Número ocupado.";
-          reserveButton.classList.add("disabled");
-          reserveButton.setAttribute("aria-disabled", "true");
-          reserveButton.href = "#";
-        } else {
+        finderStatusPill.classList.remove("ok", "out", "res", "neutral");
+        if (registro.estado === ESTADOS.DISPONIBLE) {
           finderStatusPill.classList.add("ok");
           finderStatusPill.textContent = "Disponible";
-          finderInfo.textContent = "Número disponible.";
-          const message = `Hola, quiero apartar el numero de boleta ${numText} de ${catLabel}`;
-          const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-          reserveButton.href = url;
-          reserveButton.classList.remove("disabled");
-          reserveButton.setAttribute("aria-disabled", "false");
+          finderInfo.textContent = "Número disponible para ser reservado.";
+        } else if (registro.estado === ESTADOS.RESERVADO) {
+          finderStatusPill.classList.add("res");
+          finderStatusPill.textContent = "Reservado";
+          finderInfo.textContent = "Número reservado. Pendiente de pago o confirmación.";
+        } else {
+          finderStatusPill.classList.add("out");
+          finderStatusPill.textContent = "Pagado";
+          finderInfo.textContent = "Número pagado y confirmado.";
         }
+
+        const msgName = registro.nombre ? ` para ${registro.nombre}` : "";
+        const message =
+          `Hola, quiero información sobre la boleta ${numText} de ${labelTipo(tId)} (${labelDia(dId)})${msgName}.`;
+
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        reserveButton.href = url;
+        reserveButton.classList.remove("disabled");
+        reserveButton.setAttribute("aria-disabled", "false");
       }
 
-      function buildTable() {
-        const catId = getCurrentCategoryId();
+      function validatePhone(value) {
+        const clean = value.replace(/\D/g, "");
+        if (clean.length === 9 || clean.length === 10) {
+          return clean;
+        }
+        return null;
+      }
+
+      function buildRow(tipoId, diaId, index) {
+        const registro = data[tipoId][diaId][index];
+        const tr = document.createElement("tr");
+        tr.dataset.index = String(index);
+
+        const tdNum = document.createElement("td");
+        const numBtn = document.createElement("button");
+        numBtn.type = "button";
+        numBtn.className = "num-pill";
+        numBtn.textContent = formatNumber(index);
+        tdNum.appendChild(numBtn);
+
+        const tdNombre = document.createElement("td");
+        const inputNombre = document.createElement("input");
+        inputNombre.type = "text";
+        inputNombre.className = "cell-input";
+        inputNombre.value = registro.nombre || "";
+        inputNombre.placeholder = "Nombre";
+        tdNombre.appendChild(inputNombre);
+
+        const tdCel = document.createElement("td");
+        const inputCel = document.createElement("input");
+        inputCel.type = "tel";
+        inputCel.className = "cell-input";
+        inputCel.value = registro.celular || "";
+        inputCel.placeholder = "Ej: 912345678 / 3001234567";
+        tdCel.appendChild(inputCel);
+
+        const tdEstado = document.createElement("td");
+        const spanEstado = document.createElement("span");
+        spanEstado.className = "badge-status " + registro.estado;
+        spanEstado.textContent = statusToText(registro.estado);
+        tdEstado.appendChild(spanEstado);
+
+        const tdAccion = document.createElement("td");
+        const btnAccion = document.createElement("button");
+        btnAccion.type = "button";
+        btnAccion.className = "btn-row";
+        btnAccion.textContent = "Apartar";
+
+        if (registro.estado !== ESTADOS.DISPONIBLE) {
+          btnAccion.textContent = registro.estado === ESTADOS.RESERVADO ? "Reservado" : "Pagado";
+          btnAccion.classList.add("disabled");
+        }
+
+        tdAccion.appendChild(btnAccion);
+
+        tr.appendChild(tdNum);
+        tr.appendChild(tdNombre);
+        tr.appendChild(tdCel);
+        tr.appendChild(tdEstado);
+        tr.appendChild(tdAccion);
+
+        numBtn.addEventListener("click", function () {
+          selectedIndex = index;
+          highlightSelected();
+          updateFinderFromSelection();
+        });
+
+        btnAccion.addEventListener("click", function () {
+          if (registro.estado !== ESTADOS.DISPONIBLE) return;
+
+          const nombre = inputNombre.value.trim();
+          const celRaw = inputCel.value.trim();
+          if (!nombre) {
+            alert("Por favor escribe un nombre para apartar la boleta.");
+            return;
+          }
+          const celValid = validatePhone(celRaw);
+          if (!celValid) {
+            alert("El celular debe tener 9 dígitos (Chile) o 10 dígitos (Colombia), solo números.");
+            return;
+          }
+
+          registro.nombre = nombre;
+          registro.celular = celValid;
+          registro.estado = ESTADOS.RESERVADO;
+          spanEstado.className = "badge-status " + registro.estado;
+          spanEstado.textContent = statusToText(registro.estado);
+          btnAccion.textContent = "Reservado";
+          btnAccion.classList.add("disabled");
+
+          saveData();
+
+          selectedIndex = index;
+          highlightSelected();
+          updateFinderFromSelection();
+
+          const tId = currentTipoId();
+          const dId = currentDiaId();
+          const message =
+            `Hola, quiero apartar el número ${formatNumber(index)} de ${labelTipo(tId)} (${labelDia(dId)}).\n` +
+            `Nombre: ${nombre}\nCelular: ${celValid}`;
+          const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+          window.open(url, "_blank");
+        });
+
+        inputNombre.addEventListener("change", function () {
+          registro.nombre = inputNombre.value.trim();
+          saveData();
+          if (selectedIndex === index) updateFinderFromSelection();
+        });
+
+        inputCel.addEventListener("change", function () {
+          registro.celular = inputCel.value.trim();
+          saveData();
+          if (selectedIndex === index) updateFinderFromSelection();
+        });
+
+        return tr;
+      }
+
+      function highlightSelected() {
+        const rows = tableBody.querySelectorAll("tr");
+        rows.forEach(row => {
+          const idx = parseInt(row.dataset.index, 10);
+          const pill = row.querySelector(".num-pill");
+          if (!pill) return;
+          if (selectedIndex === idx) {
+            pill.classList.add("selected");
+          } else {
+            pill.classList.remove("selected");
+          }
+        });
+      }
+
+      function rebuildTable() {
+        const tId = currentTipoId();
+        const dId = currentDiaId();
         tableBody.innerHTML = "";
         for (let i = 0; i < TOTAL_NUMBERS; i++) {
-          const tr = document.createElement("tr");
-          const tdNum = document.createElement("td");
-          const tdStatus = document.createElement("td");
-
-          tdNum.textContent = formatTicketNumber(i);
-
-          const span = document.createElement("span");
-          span.classList.add("badge-status");
-          if (availability[catId][i] === "ocupado") {
-            span.classList.add("out");
-            span.textContent = "Ocupado";
-          } else {
-            span.classList.add("ok");
-            span.textContent = "Disponible";
-          }
-          tdStatus.appendChild(span);
-
-          tr.appendChild(tdNum);
-          tr.appendChild(tdStatus);
-          tableBody.appendChild(tr);
+          tableBody.appendChild(buildRow(tId, dId, i));
         }
+        highlightSelected();
       }
 
-      function updateAdminView() {
-        const catId = adminCategorySelect.value || CATEGORIES[0].id;
-        const index = parseInt(adminSelect.value, 10);
-        if (isNaN(index)) {
-          adminStatus.textContent = "";
-          return;
-        }
-        const status = availability[catId][index];
-        adminStatus.textContent =
-          `Categoría: ${getCategoryLabelById(catId)} · Número ${formatTicketNumber(index)} · Estado: ${status === "ocupado" ? "Ocupado" : "Disponible"}`;
-        adminToggleStatus.textContent = status === "ocupado" ? "Marcar como disponible" : "Marcar como ocupado";
+      function clearSelection() {
+        selectedIndex = null;
+        highlightSelected();
+        updateFinderFromSelection();
       }
+
+      /* ADMIN */
 
       function toggleAdminPanel(show) {
         const visible = show !== undefined ? show : adminPanel.style.display !== "block";
         adminPanel.style.display = visible ? "block" : "none";
       }
 
-      loadAvailability();
-      initCategorySelects();
-      initNumberSelects();
+      function currentAdminTipo() {
+        return adminTipoSelect.value || TIPOS[0].id;
+      }
 
-      categorySelect.value = CATEGORIES[0].id;
-      adminCategorySelect.value = CATEGORIES[0].id;
-      ticketSelect.selectedIndex = 0;
-      adminSelect.selectedIndex = 0;
+      function currentAdminDia() {
+        return adminDiaSelect.value || DIAS[0].id;
+      }
 
-      updateFinderView();
-      buildTable();
-      updateAdminView();
+      function currentAdminIndex() {
+        const idx = parseInt(adminSelect.value, 10);
+        return isNaN(idx) ? 0 : idx;
+      }
 
-      categorySelect.addEventListener("change", function () {
-        updateFinderView();
-        buildTable();
+      function updateAdminStatus() {
+        const tId = currentAdminTipo();
+        const dId = currentAdminDia();
+        const idx = currentAdminIndex();
+        const registro = data[tId][dId][idx];
+
+        adminStatus.textContent =
+          `Tipo: ${labelTipo(tId)} · Día: ${labelDia(dId)} · Nº ${formatNumber(idx)} · ` +
+          `Estado: ${statusToText(registro.estado)} · Nombre: ${registro.nombre || "-"} · Celular: ${registro.celular || "-"}`;
+      }
+
+      adminTipoSelect.addEventListener("change", updateAdminStatus);
+      adminDiaSelect.addEventListener("change", updateAdminStatus);
+      adminSelect.addEventListener("change", updateAdminStatus);
+
+      function adminSetEstado(estado) {
+        const tId = currentAdminTipo();
+        const dId = currentAdminDia();
+        const idx = currentAdminIndex();
+        const registro = data[tId][dId][idx];
+        registro.estado = estado;
+        saveData();
+        updateAdminStatus();
+
+        if (tId === currentTipoId() && dId === currentDiaId()) {
+          rebuildTable();
+          if (selectedIndex === idx) updateFinderFromSelection();
+        }
+      }
+
+      adminDisponible.addEventListener("click", function () {
+        const tId = currentAdminTipo();
+        const dId = currentAdminDia();
+        const idx = currentAdminIndex();
+        const registro = data[tId][dId][idx];
+        registro.estado = ESTADOS.DISPONIBLE;
+        registro.nombre = "";
+        registro.celular = "";
+        saveData();
+        updateAdminStatus();
+        if (tId === currentTipoId() && dId === currentDiaId()) {
+          rebuildTable();
+          if (selectedIndex === idx) clearSelection();
+        }
       });
 
-      ticketSelect.addEventListener("change", function () {
-        updateFinderView();
+      adminReservado.addEventListener("click", function () {
+        adminSetEstado(ESTADOS.RESERVADO);
       });
 
-      toggleTableBtn.addEventListener("click", function () {
-        const isVisible = tableWrapper.style.display === "block";
-        tableWrapper.style.display = isVisible ? "none" : "block";
-        tableWrapper.setAttribute("aria-hidden", isVisible ? "true" : "false");
-        toggleTableBtn.textContent = isVisible ? "Ver lista completa de números" : "Ocultar lista completa";
+      adminPagado.addEventListener("click", function () {
+        adminSetEstado(ESTADOS.PAGADO);
       });
 
-      adminCategorySelect.addEventListener("change", function () {
-        updateAdminView();
+      adminClearName.addEventListener("click", function () {
+        const tId = currentAdminTipo();
+        const dId = currentAdminDia();
+        const idx = currentAdminIndex();
+        const registro = data[tId][dId][idx];
+        registro.nombre = "";
+        registro.celular = "";
+        saveData();
+        updateAdminStatus();
+        if (tId === currentTipoId() && dId === currentDiaId()) {
+          rebuildTable();
+          if (selectedIndex === idx) updateFinderFromSelection();
+        }
       });
 
-      adminSelect.addEventListener("change", function () {
-        updateAdminView();
-      });
+      adminExport.addEventListener("click", function () {
+        const rows = [];
+        TIPOS.forEach(t => {
+          DIAS.forEach(d => {
+            data[t.id][d.id].forEach((reg, idx) => {
+              if (reg.estado !== ESTADOS.DISPONIBLE || reg.nombre || reg.celular) {
+                rows.push({
+                  tipo: labelTipo(t.id),
+                  dia: labelDia(d.id),
+                  numero: formatNumber(idx),
+                  estado: statusToText(reg.estado),
+                  nombre: reg.nombre || "",
+                  celular: reg.celular || ""
+                });
+              }
+            });
+          });
+        });
 
-      adminToggleStatus.addEventListener("click", function () {
-        const catId = adminCategorySelect.value || CATEGORIES[0].id;
-        const index = parseInt(adminSelect.value, 10);
-        if (isNaN(index)) return;
-        availability[catId][index] = availability[catId][index] === "ocupado" ? "disponible" : "ocupado";
-        saveAvailability();
-        updateAdminView();
-        updateFinderView();
-        buildTable();
+        if (rows.length === 0) {
+          alert("No hay reservas para exportar.");
+          return;
+        }
+
+        let csv = "Tipo;Día;Número;Estado;Nombre;Celular\r\n";
+        rows.forEach(r => {
+          csv += `${r.tipo};${r.dia};${r.numero};${r.estado};${r.nombre};${r.celular}\r\n`;
+        });
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "reservas_chontico.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
       });
 
       adminTrigger.addEventListener("click", function () {
@@ -1130,6 +1501,28 @@
           e.preventDefault();
           toggleAdminPanel();
         }
+      });
+
+      /* INICIALIZACIÓN GENERAL */
+      loadData();
+      initSelectors();
+      refreshFinderLabels();
+      rebuildTable();
+      updateFinderFromSelection();
+      updateAdminStatus();
+
+      tipoSelect.addEventListener("change", function () {
+        clearSelection();
+        rebuildTable();
+      });
+
+      diaSelect.addEventListener("change", function () {
+        clearSelection();
+        rebuildTable();
+      });
+
+      clearSelectionBtn.addEventListener("click", function () {
+        clearSelection();
       });
     })();
   </script>
