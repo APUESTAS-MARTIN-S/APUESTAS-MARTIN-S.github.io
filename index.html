@@ -75,7 +75,6 @@
 
     .content { position: relative; z-index: 1; }
 
-    /* BANNER CON LOGO */
     .banner {
       border-radius: 22px;
       overflow: hidden;
@@ -96,7 +95,6 @@
       display: block;
     }
 
-    /* MARCA */
     .header-brand {
       display: flex;
       justify-content: space-between;
@@ -167,7 +165,6 @@
       .header-brand { flex-direction: column; align-items: flex-start; }
     }
 
-    /* HERO VALORES */
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr);
@@ -211,7 +208,7 @@
     .flag { font-size: 0.8em; margin-left: 4px; }
 
     .hero-right {
-      background: rgba(1,17,13,0.96);
+      background: rgba(1,17,13,0.98);
       border-radius: 18px;
       border: 1px solid rgba(22,163,74,0.7);
       padding: 12px 12px 10px;
@@ -235,7 +232,6 @@
 
     .pill strong { color: var(--accent); font-weight: 600; }
 
-    /* SECCIÓN NÚMERO + ACCIONES */
     .finder-section {
       background: rgba(1,17,13,0.98);
       border-radius: 18px;
@@ -285,6 +281,11 @@
       box-shadow: 0 0 0 1px var(--accent-strong);
     }
 
+    @media (max-width: 640px) {
+      .finder-controls-row { flex-direction: column; align-items: flex-start; }
+      .finder-select { width: 100%; }
+    }
+
     .finder-actions {
       display: flex;
       flex-direction: column;
@@ -309,7 +310,6 @@
       object-fit: cover;
     }
 
-    /* BOTONES */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -338,7 +338,6 @@
       box-shadow: 0 16px 32px rgba(22,163,74,0.8);
     }
 
-    /* TABLA INTERACTIVA 00–99 */
     .tickets-table-wrapper {
       margin-top: 8px;
       max-height: 360px;
@@ -462,7 +461,6 @@
       padding-top: 4px;
     }
 
-    /* PAGOS */
     .payments {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -512,7 +510,6 @@
       margin-top: 4px;
     }
 
-    /* FOOTER */
     .footer {
       margin-top: 6px;
       font-size: 11px;
@@ -520,7 +517,6 @@
       text-align: center;
     }
 
-    /* ADMIN */
     #admin-trigger {
       position: fixed;
       bottom: 4px;
@@ -626,12 +622,10 @@
 <body>
   <main>
     <div class="content">
-      <!-- BANNER CON LOGO -->
       <section class="banner">
         <img src="logo.jpeg" alt="Apuestas Martin's" class="banner-img">
       </section>
 
-      <!-- MARCA -->
       <header class="header-brand">
         <div class="logo">
           <div class="logo-mark-img">
@@ -648,46 +642,40 @@
         </div>
       </header>
 
-      <!-- VALORES -->
       <section class="hero">
         <div class="hero-left">
-          <div class="eyebrow">
-            <span>Boletas Chontico</span>
-          </div>
+          <div class="eyebrow"><span>Boletas Chontico</span></div>
           <h2 class="title">
             Valores en <strong>CLP<span class="flag">🇨🇱</span></strong> y
             <strong>COP<span class="flag">🇨🇴</span></strong>.
           </h2>
         </div>
-
         <aside class="hero-right">
           <div class="hero-right-title">Valores por tipo de boleta</div>
           <div class="pill-row">
             <div class="pill">
               <strong>CHONTICO DÍA</strong><br>
-              <span>Lunes a Sábado: $2.000 CLP · $8.000 COP<br>Domingo: $1.000 CLP · $4.000 COP</span>
+              Lunes a Sábado: $2.000 CLP · $8.000 COP<br>
+              Domingo: $1.000 CLP · $4.000 COP
             </div>
             <div class="pill">
               <strong>CHONTICO NOCHE</strong><br>
-              <span>Lunes a Viernes: $2.000 CLP · $8.000 COP<br>Sábado y Domingo: $3.000 CLP · $12.000 COP</span>
+              Lunes a Viernes: $2.000 CLP · $8.000 COP<br>
+              Sábado y Domingo: $3.000 CLP · $12.000 COP
             </div>
           </div>
         </aside>
       </section>
 
-      <!-- SECCIÓN PRINCIPAL -->
       <section class="finder-section">
         <div class="finder-header">
           <h3 class="finder-title">Número de boleta</h3>
-          <p class="finder-note">
-            Elige tipo, día y número del 00 al 99.
-          </p>
+          <p class="finder-note">Elige tipo, día y número del 00 al 99.</p>
         </div>
 
         <div class="finder-controls-row">
           <span class="finder-label">Tipo:</span>
           <select id="tipo-select" class="finder-select"></select>
-
           <span class="finder-label">Día:</span>
           <select id="dia-select" class="finder-select"></select>
         </div>
@@ -705,8 +693,7 @@
           </a>
         </div>
 
-        <!-- TABLA INTERACTIVA -->
-        <div class="tickets-table-wrapper" id="tickets-table-wrapper">
+        <div class="tickets-table-wrapper">
           <table class="tickets-table">
             <thead>
               <tr>
@@ -725,7 +712,6 @@
         </div>
       </section>
 
-      <!-- PAGOS -->
       <section class="payments">
         <div class="payments-card">
           <div class="payments-title">Cuentas en CHILE 🇨🇱</div>
@@ -767,17 +753,14 @@
         </div>
       </section>
 
-      <!-- FOOTER -->
       <footer class="footer">
         Apuestas Martin's · Boletas Chontico
       </footer>
     </div>
   </main>
 
-  <!-- TRIGGER INVISIBLE PARA MODO ADMIN -->
   <div id="admin-trigger" aria-hidden="true"></div>
 
-  <!-- PANEL ADMIN -->
   <div id="admin-panel" aria-hidden="true">
     <button id="admin-close" type="button" title="Cerrar">×</button>
     <div id="admin-panel-title">Modo administrador</div>
@@ -803,16 +786,32 @@
     <button id="admin-export">Descargar CSV (Excel)</button>
   </div>
 
+  <!-- Firebase v8 (CDN) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCJ-Q-TFJ7jNVJtlb6d8x5-q2pq0hKbca0",
+      authDomain: "apuestas-manrtin-s.firebaseapp.com",
+      databaseURL: "https://apuestas-manrtin-s-default-rtdb.firebaseio.com",
+      projectId: "apuestas-manrtin-s",
+      storageBucket: "apuestas-manrtin-s.firebasestorage.app",
+      messagingSenderId: "207853884414",
+      appId: "1:207853884414:web:67e81dcc4c4aa3d4ffa6af",
+      measurementId: "G-3RLTFV4S7T"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+  </script>
+
   <script>
     (function () {
       const TOTAL_NUMBERS = 100; // 00–99
-      const STORAGE_KEY = "boletasChonticoEstados_v7";
-
       const TIPOS = [
         { id: "dia",   label: "Chontico Día" },
         { id: "noche", label: "Chontico Noche" }
       ];
-
       const DIAS = [
         { id: "lun", label: "Lunes" },
         { id: "mar", label: "Martes" },
@@ -822,7 +821,6 @@
         { id: "sab", label: "Sábado" },
         { id: "dom", label: "Domingo" }
       ];
-
       const ESTADOS = {
         DISPONIBLE: "disponible",
         RESERVADO: "reservado",
@@ -846,90 +844,53 @@
       const adminExport = document.getElementById("admin-export");
       const adminClose = document.getElementById("admin-close");
 
-      let data = {}; // data[tipoId][diaId][index] = {estado, nombre, celular}
+      let data = {};
       let selectedIndex = null;
+      let ready = false;
 
       function formatNumber(n) {
         return n.toString().padStart(2, "0");
       }
 
-      function ensureStructure() {
+      function defaultRegistro() {
+        return { estado: ESTADOS.DISPONIBLE, nombre: "", celular: "" };
+      }
+
+      function buildDefaultData() {
+        const obj = {};
         TIPOS.forEach(t => {
-          if (!data[t.id]) data[t.id] = {};
+          obj[t.id] = {};
           DIAS.forEach(d => {
-            if (!Array.isArray(data[t.id][d.id]) || data[t.id][d.id].length !== TOTAL_NUMBERS) {
-              const arr = new Array(TOTAL_NUMBERS);
-              for (let i = 0; i < TOTAL_NUMBERS; i++) {
-                arr[i] = { estado: ESTADOS.DISPONIBLE, nombre: "", celular: "" };
-              }
-              data[t.id][d.id] = arr;
-            }
+            obj[t.id][d.id] = Array.from({ length: TOTAL_NUMBERS }, defaultRegistro);
           });
         });
+        return obj;
       }
 
-      function loadData() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          try {
-            const parsed = JSON.parse(saved);
-            if (parsed && typeof parsed === "object") {
-              data = parsed;
-            }
-          } catch (e) {}
-        }
-        ensureStructure();
-      }
+      function mergeRemote(remote) {
+        const base = buildDefaultData();
+        if (!remote || typeof remote !== "object") return base;
 
-      function saveData() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        } catch (e) {}
-      }
-
-      function initSelectors() {
         TIPOS.forEach(t => {
-          const opt = document.createElement("option");
-          opt.value = t.id;
-          opt.textContent = t.label;
-          tipoSelect.appendChild(opt);
-
-          const optAdmin = document.createElement("option");
-          optAdmin.value = t.id;
-          optAdmin.textContent = t.label;
-          adminTipoSelect.appendChild(optAdmin);
+          DIAS.forEach(d => {
+            const arrR = (remote[t.id] && remote[t.id][d.id]) || [];
+            arrR.forEach((r, idx) => {
+              if (idx < TOTAL_NUMBERS && r && typeof r === "object") {
+                base[t.id][d.id][idx] = {
+                  estado: r.estado || ESTADOS.DISPONIBLE,
+                  nombre: r.nombre || "",
+                  celular: r.celular || ""
+                };
+              }
+            });
+          });
         });
-
-        DIAS.forEach(d => {
-          const opt = document.createElement("option");
-          opt.value = d.id;
-          opt.textContent = d.label;
-          diaSelect.appendChild(opt);
-
-          const optAdmin = document.createElement("option");
-          optAdmin.value = d.id;
-          optAdmin.textContent = d.label;
-          adminDiaSelect.appendChild(optAdmin);
-        });
-
-        for (let i = 0; i < TOTAL_NUMBERS; i++) {
-          const optAdmin = document.createElement("option");
-          optAdmin.value = String(i);
-          optAdmin.textContent = formatNumber(i);
-          adminSelect.appendChild(optAdmin);
-        }
-
-        tipoSelect.value = TIPOS[0].id;
-        diaSelect.value = DIAS[0].id;
-        adminTipoSelect.value = TIPOS[0].id;
-        adminDiaSelect.value = DIAS[0].id;
-        adminSelect.value = "0";
+        return base;
       }
 
       function currentTipoId() {
         return tipoSelect.value || TIPOS[0].id;
       }
-
       function currentDiaId() {
         return diaSelect.value || DIAS[0].id;
       }
@@ -938,7 +899,6 @@
         const t = TIPOS.find(x => x.id === id);
         return t ? t.label : id;
       }
-
       function labelDia(id) {
         const d = DIAS.find(x => x.id === id);
         return d ? d.label : id;
@@ -956,6 +916,11 @@
           return clean;
         }
         return null;
+      }
+
+      function writeRegistro(tipoId, diaId, index) {
+        const reg = data[tipoId][diaId][index];
+        db.ref("boletas/" + tipoId + "/" + diaId + "/" + index).set(reg);
       }
 
       function buildRow(tipoId, diaId, index) {
@@ -1048,34 +1013,18 @@
           registro.celular = celValid;
           registro.estado = ESTADOS.RESERVADO;
 
-          spanEstado.className = "badge-status " + registro.estado;
-          spanEstado.textContent = statusToText(registro.estado);
-          btnAccion.textContent = "Reservado";
-          btnAccion.classList.add("disabled");
-
-          inputCel.style.display = "none";
-          let info = tdCel.querySelector(".hint-cell");
-          if (!info) {
-            info = document.createElement("div");
-            info.className = "hint-cell";
-            tdCel.appendChild(info);
-          }
-          info.textContent = "Registrado";
-
-          saveData();
-          selectedIndex = index;
-          highlightSelected();
+          writeRegistro(tipoId, diaId, index);
         });
 
         inputNombre.addEventListener("change", function () {
           registro.nombre = inputNombre.value.trim();
-          saveData();
+          writeRegistro(tipoId, diaId, index);
         });
 
         inputCel.addEventListener("change", function () {
           if (registro.estado === ESTADOS.DISPONIBLE) {
             registro.celular = inputCel.value.trim();
-            saveData();
+            writeRegistro(tipoId, diaId, index);
           }
         });
 
@@ -1097,6 +1046,7 @@
       }
 
       function rebuildTable() {
+        if (!ready) return;
         const tId = currentTipoId();
         const dId = currentDiaId();
         tableBody.innerHTML = "";
@@ -1111,8 +1061,6 @@
         highlightSelected();
       }
 
-      /* ADMIN */
-
       function toggleAdminPanel(show) {
         const visible = show !== undefined ? show : adminPanel.style.display !== "block";
         adminPanel.style.display = visible ? "block" : "none";
@@ -1121,30 +1069,28 @@
       function currentAdminTipo() {
         return adminTipoSelect.value || TIPOS[0].id;
       }
-
       function currentAdminDia() {
         return adminDiaSelect.value || DIAS[0].id;
       }
-
       function currentAdminIndex() {
         const idx = parseInt(adminSelect.value, 10);
         return isNaN(idx) ? 0 : idx;
       }
 
       function updateAdminStatus() {
+        if (!ready) return;
         const tId = currentAdminTipo();
         const dId = currentAdminDia();
         const idx = currentAdminIndex();
         const registro = data[tId][dId][idx];
 
         adminStatus.textContent =
-          `Tipo: ${labelTipo(tId)} · Día: ${labelDia(dId)} · Nº ${formatNumber(idx)} · ` +
-          `Estado: ${statusToText(registro.estado)} · Nombre: ${registro.nombre || "-"}`;
+          "Tipo: " + labelTipo(tId) +
+          " · Día: " + labelDia(dId) +
+          " · Nº " + formatNumber(idx) +
+          " · Estado: " + statusToText(registro.estado) +
+          " · Nombre: " + (registro.nombre || "-");
       }
-
-      adminTipoSelect.addEventListener("change", updateAdminStatus);
-      adminDiaSelect.addEventListener("change", updateAdminStatus);
-      adminSelect.addEventListener("change", updateAdminStatus);
 
       function adminSetEstado(estado) {
         const tId = currentAdminTipo();
@@ -1152,12 +1098,59 @@
         const idx = currentAdminIndex();
         const registro = data[tId][dId][idx];
         registro.estado = estado;
-        saveData();
-        updateAdminStatus();
+        writeRegistro(tId, dId, idx);
+      }
 
-        if (tId === currentTipoId() && dId === currentDiaId()) {
-          rebuildTable();
+      function initSelectors() {
+        TIPOS.forEach(t => {
+          const opt = document.createElement("option");
+          opt.value = t.id;
+          opt.textContent = t.label;
+          tipoSelect.appendChild(opt);
+
+          const optAdmin = document.createElement("option");
+          optAdmin.value = t.id;
+          optAdmin.textContent = t.label;
+          adminTipoSelect.appendChild(optAdmin);
+        });
+
+        DIAS.forEach(d => {
+          const opt = document.createElement("option");
+          opt.value = d.id;
+          opt.textContent = d.label;
+          diaSelect.appendChild(opt);
+
+          const optAdmin = document.createElement("option");
+          optAdmin.value = d.id;
+          optAdmin.textContent = d.label;
+          adminDiaSelect.appendChild(optAdmin);
+        });
+
+        for (let i = 0; i < TOTAL_NUMBERS; i++) {
+          const optAdmin = document.createElement("option");
+          optAdmin.value = String(i);
+          optAdmin.textContent = formatNumber(i);
+          adminSelect.appendChild(optAdmin);
         }
+
+        tipoSelect.value = TIPOS[0].id;
+        diaSelect.value = DIAS[0].id;
+        adminTipoSelect.value = TIPOS[0].id;
+        adminDiaSelect.value = DIAS[0].id;
+        adminSelect.value = "0";
+
+        tipoSelect.addEventListener("change", function () {
+          clearSelection();
+          rebuildTable();
+        });
+        diaSelect.addEventListener("change", function () {
+          clearSelection();
+          rebuildTable();
+        });
+
+        adminTipoSelect.addEventListener("change", updateAdminStatus);
+        adminDiaSelect.addEventListener("change", updateAdminStatus);
+        adminSelect.addEventListener("change", updateAdminStatus);
       }
 
       adminDisponible.addEventListener("click", function () {
@@ -1168,12 +1161,7 @@
         registro.estado = ESTADOS.DISPONIBLE;
         registro.nombre = "";
         registro.celular = "";
-        saveData();
-        updateAdminStatus();
-        if (tId === currentTipoId() && dId === currentDiaId()) {
-          rebuildTable();
-          if (selectedIndex === idx) clearSelection();
-        }
+        writeRegistro(tId, dId, idx);
       });
 
       adminReservado.addEventListener("click", function () {
@@ -1191,11 +1179,7 @@
         const registro = data[tId][dId][idx];
         registro.nombre = "";
         registro.celular = "";
-        saveData();
-        updateAdminStatus();
-        if (tId === currentTipoId() && dId === currentDiaId()) {
-          rebuildTable();
-        }
+        writeRegistro(tId, dId, idx);
       });
 
       adminExport.addEventListener("click", function () {
@@ -1224,7 +1208,8 @@
 
         let csv = "Tipo;Día;Número;Estado;Nombre;Celular\r\n";
         rows.forEach(r => {
-          csv += `${r.tipo};${r.dia};${r.numero};${r.estado};${r.nombre};${r.celular}\r\n`;
+          csv += r.tipo + ";" + r.dia + ";" + r.numero + ";" +
+                 r.estado + ";" + r.nombre + ";" + r.celular + "\r\n";
         });
 
         const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -1253,20 +1238,17 @@
         }
       });
 
-      /* INICIALIZACIÓN GENERAL */
-      loadData();
       initSelectors();
+      data = buildDefaultData();
+      ready = true;
       rebuildTable();
-      updateAdminStatus();
 
-      tipoSelect.addEventListener("change", function () {
-        clearSelection();
+      db.ref("boletas").on("value", function (snapshot) {
+        data = mergeRemote(snapshot.val());
+        ready = true;
         rebuildTable();
-      });
-
-      diaSelect.addEventListener("change", function () {
-        clearSelection();
-        rebuildTable();
+        updateAdminStatus();
+        highlightSelected();
       });
     })();
   </script>
