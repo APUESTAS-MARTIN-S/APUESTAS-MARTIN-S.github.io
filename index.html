@@ -515,21 +515,10 @@
       font-size: 11px;
       color: var(--text-muted);
       text-align: center;
+      cursor: pointer; /* para que parezca clicable */
     }
 
-    /* Área invisible pero grande para abrir administrador */
-    #admin-trigger {
-      position: fixed;
-      bottom: 18px;
-      right: 18px;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      opacity: 0;
-      cursor: pointer;
-      z-index: 50;
-    }
-
+    /* Panel administrador */
     #admin-panel {
       position: fixed;
       bottom: 14px;
@@ -757,20 +746,19 @@
         </div>
       </section>
 
-      <footer class="footer">
+      <!-- Frase que ahora sirve como botón oculto de administrador -->
+      <footer class="footer" id="admin-footer-trigger">
         Apuestas Martin's · Boletas Chontico
       </footer>
     </div>
   </main>
 
-  <!-- Zona invisible para abrir el modo administrador -->
-  <div id="admin-trigger" aria-hidden="true"></div>
-
+  <!-- Panel administrador -->
   <div id="admin-panel" aria-hidden="true">
     <button id="admin-close" type="button" title="Cerrar">×</button>
     <div id="admin-panel-title">Modo administrador</div>
     <div id="admin-panel-note">
-      Cambia estados, limpia datos y descarga reservas en CSV. Atajo: <strong>Ctrl + Shift + A</strong>.
+      Cambia estados, limpia datos y descarga reservas en CSV. Atajo en PC: <strong>Ctrl + Shift + A</strong>.
     </div>
 
     <select id="admin-tipo" class="admin-select"></select>
@@ -837,7 +825,7 @@
       const diaSelect = document.getElementById("dia-select");
       const tableBody = document.getElementById("tickets-table-body");
 
-      const adminTrigger = document.getElementById("admin-trigger");
+      const adminTrigger = document.getElementById("admin-footer-trigger");
       const adminPanel = document.getElementById("admin-panel");
       const adminTipoSelect = document.getElementById("admin-tipo");
       const adminDiaSelect = document.getElementById("admin-dia");
