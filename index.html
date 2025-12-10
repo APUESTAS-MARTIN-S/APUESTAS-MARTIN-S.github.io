@@ -517,13 +517,14 @@
       text-align: center;
     }
 
+    /* Área invisible pero grande para abrir administrador */
     #admin-trigger {
       position: fixed;
-      bottom: 4px;
-      right: 4px;
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
+      bottom: 18px;
+      right: 18px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
       opacity: 0;
       cursor: pointer;
       z-index: 50;
@@ -592,7 +593,8 @@
 
     .admin-btn-small:hover { background: #022c22; }
 
-    #admin-export {
+    #admin-export,
+    #admin-reset-week {
       width: 100%;
       padding: 6px 8px;
       border-radius: 999px;
@@ -601,9 +603,11 @@
       color: #bbf7d0;
       font-size: 11px;
       cursor: pointer;
+      margin-top: 4px;
     }
 
-    #admin-export:hover { background: #065f46; }
+    #admin-export:hover,
+    #admin-reset-week:hover { background: #065f46; }
 
     #admin-close {
       position: absolute;
@@ -759,13 +763,14 @@
     </div>
   </main>
 
+  <!-- Zona invisible para abrir el modo administrador -->
   <div id="admin-trigger" aria-hidden="true"></div>
 
   <div id="admin-panel" aria-hidden="true">
     <button id="admin-close" type="button" title="Cerrar">×</button>
     <div id="admin-panel-title">Modo administrador</div>
     <div id="admin-panel-note">
-      Cambia estados, limpia datos y descarga reservas en CSV (Excel). Atajo: <strong>Ctrl + Shift + A</strong>.
+      Cambia estados, limpia datos y descarga reservas en CSV. Atajo: <strong>Ctrl + Shift + A</strong>.
     </div>
 
     <select id="admin-tipo" class="admin-select"></select>
@@ -783,6 +788,7 @@
       Borrar nombre y celular
     </button>
 
+    <button id="admin-reset-week">Reiniciar semana (todo disponible)</button>
     <button id="admin-export">Descargar CSV (Excel)</button>
   </div>
 
@@ -842,11 +848,13 @@
       const adminPagado = document.getElementById("admin-pagado");
       const adminClearName = document.getElementById("admin-clear-name");
       const adminExport = document.getElementById("admin-export");
+      const adminResetWeek = document.getElementById("admin-reset-week");
       const adminClose = document.getElementById("admin-close");
 
       let data = {};
       let selectedIndex = null;
       let ready = false;
+      let adminUnlocked = false;
 
       function formatNumber(n) {
         return n.toString().padStart(2, "0");
@@ -918,7 +926,6 @@
         return null;
       }
 
-      // GUARDAR EN FIREBASE (ahora con .then/.catch para ver errores)
       function writeRegistro(tipoId, diaId, index) {
         const reg = data[tipoId][diaId][index];
         db.ref("boletas/" + tipoId + "/" + diaId + "/" + index)
@@ -1232,8 +1239,35 @@
         URL.revokeObjectURL(url);
       });
 
+      adminResetWeek.addEventListener("click", function () {
+        if (!confirm("¿Seguro que quieres reiniciar toda la semana? Esto borrará todos los nombres, celulares y pondrá todas las boletas en Disponible.")) {
+          return;
+        }
+        const fresh = buildDefaultData();
+        db.ref("boletas").set(fresh)
+          .then(function () {
+            alert("Semana reiniciada. Todas las boletas están disponibles.");
+          })
+          .catch(function (error) {
+            console.error("Error al reiniciar la semana:", error);
+            alert("No se pudo reiniciar la semana. Revisa la conexión o las reglas de Firebase.");
+          });
+      });
+
+      function openAdminWithAuth() {
+        if (!adminUnlocked) {
+          const pwd = prompt("Contraseña de administrador:");
+          if (pwd !== "Martin15.") {
+            alert("Contraseña incorrecta.");
+            return;
+          }
+          adminUnlocked = true;
+        }
+        toggleAdminPanel(true);
+      }
+
       adminTrigger.addEventListener("click", function () {
-        toggleAdminPanel();
+        openAdminWithAuth();
       });
 
       adminClose.addEventListener("click", function () {
@@ -1243,22 +1277,26 @@
       document.addEventListener("keydown", function (e) {
         if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
           e.preventDefault();
-          toggleAdminPanel();
+          openAdminWithAuth();
         }
       });
 
-      initSelectors();
-      data = buildDefaultData();
-      ready = true;
-      rebuildTable();
-
-      db.ref("boletas").on("value", function (snapshot) {
-        data = mergeRemote(snapshot.val());
+      function init() {
+        initSelectors();
+        data = buildDefaultData();
         ready = true;
         rebuildTable();
-        updateAdminStatus();
-        highlightSelected();
-      });
+
+        db.ref("boletas").on("value", function (snapshot) {
+          data = mergeRemote(snapshot.val());
+          ready = true;
+          rebuildTable();
+          updateAdminStatus();
+          highlightSelected();
+        });
+      }
+
+      init();
     })();
   </script>
 </body>
