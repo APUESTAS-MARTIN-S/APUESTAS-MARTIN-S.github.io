@@ -525,6 +525,17 @@
       cursor: pointer; /* para que parezca clicable */
     }
 
+    /* Botón texto del footer (sin cambiar diseño) */
+    .footer-btn {
+      background: none;
+      border: none;
+      color: inherit;
+      font: inherit;
+      padding: 0;
+      cursor: pointer;
+    }
+    .footer-btn:focus { outline: none; }
+
     /* Panel administrador */
     #admin-panel {
       position: fixed;
@@ -750,7 +761,7 @@
 
       <!-- Frase que ahora sirve como botón oculto de administrador -->
       <footer class="footer" id="admin-footer-trigger">
-        <!-- ELIMINADO (tachado): texto del footer -->
+        <button type="button" class="footer-btn">Apuestas Martin's</button>
       </footer>
     </div>
   </main>
