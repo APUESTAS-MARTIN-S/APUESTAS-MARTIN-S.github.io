@@ -437,6 +437,13 @@
       color: #dbeafe;
     }
 
+    /* Nuevo estado: ABONADO */
+    .badge-status.abonado {
+      background: rgba(168,85,247,0.14);
+      border-color: rgba(168,85,247,0.85);
+      color: #f3e8ff;
+    }
+
     .btn-row {
       padding: 5px 10px;
       border-radius: 999px;
@@ -565,7 +572,7 @@
 
     .admin-buttons {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 4px;
       margin-bottom: 6px;
     }
@@ -629,10 +636,7 @@
             <div class="logo-text-sub">Boletas Chontico</div>
           </div>
         </div>
-        <div class="tag-age">
-          <span class="badge">+18</span>
-          <span>Solo mayores de edad</span>
-        </div>
+        <!-- ELIMINADO (tachado): bloque +18 / Solo mayores de edad -->
       </header>
 
       <section class="hero">
@@ -663,7 +667,7 @@
       <section class="finder-section">
         <div class="finder-header">
           <h3 class="finder-title">Número de boleta</h3>
-          <p class="finder-note">Elige tipo, día y número del 00 al 99.</p>
+          <!-- ELIMINADO (tachado): texto de ayuda -->
         </div>
 
         <div class="finder-controls-row">
@@ -700,9 +704,7 @@
             <tbody id="tickets-table-body"></tbody>
           </table>
         </div>
-        <div class="hint-cell">
-          El celular se guarda solo para uso interno y no se muestra cuando la boleta ya está apartada.
-        </div>
+        <!-- ELIMINADO (tachado): texto inferior de celular -->
       </section>
 
       <section class="payments">
@@ -748,7 +750,7 @@
 
       <!-- Frase que ahora sirve como botón oculto de administrador -->
       <footer class="footer" id="admin-footer-trigger">
-        Apuestas Martin's · Boletas Chontico
+        <!-- ELIMINADO (tachado): texto del footer -->
       </footer>
     </div>
   </main>
@@ -771,6 +773,7 @@
       <button id="admin-disponible" class="admin-btn-small">Disponible</button>
       <button id="admin-reservado" class="admin-btn-small">Reservado</button>
       <button id="admin-pagado" class="admin-btn-small">Pagado</button>
+      <button id="admin-abonado" class="admin-btn-small">Abonado</button>
     </div>
     <button id="admin-clear-name" class="admin-btn-small" style="width:100%; margin-bottom:6px;">
       Borrar nombre y celular
@@ -818,7 +821,8 @@
       const ESTADOS = {
         DISPONIBLE: "disponible",
         RESERVADO: "reservado",
-        PAGADO: "pagado"
+        PAGADO: "pagado",
+        ABONADO: "abonado"
       };
 
       const tipoSelect = document.getElementById("tipo-select");
@@ -834,6 +838,7 @@
       const adminDisponible = document.getElementById("admin-disponible");
       const adminReservado = document.getElementById("admin-reservado");
       const adminPagado = document.getElementById("admin-pagado");
+      const adminAbonado = document.getElementById("admin-abonado");
       const adminClearName = document.getElementById("admin-clear-name");
       const adminExport = document.getElementById("admin-export");
       const adminResetWeek = document.getElementById("admin-reset-week");
@@ -903,6 +908,7 @@
       function statusToText(estado) {
         if (estado === ESTADOS.RESERVADO) return "Reservado";
         if (estado === ESTADOS.PAGADO) return "Pagado";
+        if (estado === ESTADOS.ABONADO) return "Abonado";
         return "Disponible";
       }
 
@@ -977,7 +983,9 @@
         btnAccion.textContent = "Apartar";
 
         if (registro.estado !== ESTADOS.DISPONIBLE) {
-          btnAccion.textContent = registro.estado === ESTADOS.RESERVADO ? "Reservado" : "Pagado";
+          if (registro.estado === ESTADOS.RESERVADO) btnAccion.textContent = "Reservado";
+          else if (registro.estado === ESTADOS.PAGADO) btnAccion.textContent = "Pagado";
+          else if (registro.estado === ESTADOS.ABONADO) btnAccion.textContent = "Abonado";
           btnAccion.classList.add("disabled");
         }
         tdAccion.appendChild(btnAccion);
@@ -988,6 +996,12 @@
         tr.appendChild(tdEstado);
         tr.appendChild(tdAccion);
 
+        // Regla: ABONADO no puede ser modificado ni reservado por clientes
+        if (registro.estado === ESTADOS.ABONADO) {
+          inputNombre.disabled = true;
+          inputCel.disabled = true;
+        }
+
         numBtn.addEventListener("click", function () {
           selectedIndex = index;
           highlightSelected();
@@ -995,6 +1009,7 @@
 
         btnAccion.addEventListener("click", function () {
           if (registro.estado !== ESTADOS.DISPONIBLE) return;
+          if (registro.estado === ESTADOS.ABONADO) return;
 
           const nombre = inputNombre.value.trim();
           if (!nombre) {
@@ -1021,11 +1036,13 @@
         });
 
         inputNombre.addEventListener("change", function () {
+          if (registro.estado === ESTADOS.ABONADO) return;
           registro.nombre = inputNombre.value.trim();
           writeRegistro(tipoId, diaId, index);
         });
 
         inputCel.addEventListener("change", function () {
+          if (registro.estado === ESTADOS.ABONADO) return;
           if (registro.estado === ESTADOS.DISPONIBLE) {
             registro.celular = inputCel.value.trim();
             writeRegistro(tipoId, diaId, index);
@@ -1176,6 +1193,10 @@
         adminSetEstado(ESTADOS.PAGADO);
       });
 
+      adminAbonado.addEventListener("click", function () {
+        adminSetEstado(ESTADOS.ABONADO);
+      });
+
       adminClearName.addEventListener("click", function () {
         const tId = currentAdminTipo();
         const dId = currentAdminDia();
@@ -1231,10 +1252,26 @@
         if (!confirm("¿Seguro que quieres reiniciar toda la semana? Esto borrará todos los nombres, celulares y pondrá todas las boletas en Disponible.")) {
           return;
         }
+
+        // Regla: ABONADO NO se borra con reiniciar semana.
         const fresh = buildDefaultData();
+        TIPOS.forEach(t => {
+          DIAS.forEach(d => {
+            data[t.id][d.id].forEach((reg, idx) => {
+              if (reg && reg.estado === ESTADOS.ABONADO) {
+                fresh[t.id][d.id][idx] = {
+                  estado: reg.estado,
+                  nombre: reg.nombre || "",
+                  celular: reg.celular || ""
+                };
+              }
+            });
+          });
+        });
+
         db.ref("boletas").set(fresh)
           .then(function () {
-            alert("Semana reiniciada. Todas las boletas están disponibles.");
+            alert("Semana reiniciada. Todas las boletas están disponibles (excepto ABONADO).");
           })
           .catch(function (error) {
             console.error("Error al reiniciar la semana:", error);
