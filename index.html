@@ -75,26 +75,6 @@
 
     .content { position: relative; z-index: 1; }
 
-    .banner {
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(22,163,74,0.7);
-      box-shadow: 0 14px 32px rgba(4,20,14,0.95);
-      margin-bottom: 18px;
-      background: #064e3b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 10px;
-    }
-
-    .banner-img {
-      width: 100%;
-      max-height: 260px;
-      object-fit: contain;
-      display: block;
-    }
-
     .header-brand {
       display: flex;
       justify-content: space-between;
@@ -126,6 +106,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
     .logo-text-main {
@@ -137,28 +118,6 @@
     .logo-text-sub {
       font-size: 12px;
       color: var(--text-muted);
-    }
-
-    .tag-age {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(1,17,13,0.96);
-      border: 1px solid rgba(22,163,74,0.7);
-      font-size: 12px;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
-
-    .tag-age span.badge {
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(248,250,252,0.06);
-      color: #e5e7eb;
-      font-size: 11px;
-      font-weight: 600;
     }
 
     @media (max-width: 640px) {
@@ -249,7 +208,6 @@
     }
 
     .finder-title { font-size: 15px; font-weight: 600; }
-    .finder-note { font-size: 12px; color: var(--text-muted); }
 
     @media (max-width: 640px) {
       .finder-header { flex-direction: column; align-items: flex-start; }
@@ -302,6 +260,7 @@
       border: 1px solid rgba(34,197,94,0.7);
       box-shadow: 0 10px 22px rgba(2,23,16,0.9);
       background: #022c22;
+      cursor: pointer;
     }
 
     .dino-inline-img img {
@@ -387,6 +346,7 @@
       font-family: "Space Grotesk", system-ui, sans-serif;
       font-size: 15px;
       cursor: pointer;
+      color: #f9fafb;
     }
 
     .num-pill.selected {
@@ -416,13 +376,23 @@
       font-size: 11px;
       border: 1px solid transparent;
       text-align: center;
-      min-width: 80px;
+      min-width: 90px;
+      user-select: none;
     }
 
+    /* Disponible: clicable por el usuario */
     .badge-status.disponible {
       background: rgba(22,163,74,0.18);
       border-color: rgba(34,197,94,0.8);
       color: #bbf7d0;
+      cursor: pointer;
+    }
+
+    /* No clicable por el usuario */
+    .badge-status.reservado,
+    .badge-status.pagado,
+    .badge-status.abonado {
+      cursor: default;
     }
 
     .badge-status.reservado {
@@ -437,29 +407,10 @@
       color: #dbeafe;
     }
 
-    /* Nuevo estado: ABONADO */
     .badge-status.abonado {
       background: rgba(168,85,247,0.14);
       border-color: rgba(168,85,247,0.85);
       color: #f3e8ff;
-    }
-
-    .btn-row {
-      padding: 5px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(34,197,94,0.7);
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #f9fafb;
-      font-size: 12px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .btn-row.disabled {
-      opacity: 0.5;
-      cursor: default;
-      background: #1f2937;
-      border-color: rgba(107,114,128,0.8);
     }
 
     .hint-cell {
@@ -522,10 +473,9 @@
       font-size: 11px;
       color: var(--text-muted);
       text-align: center;
-      cursor: pointer; /* para que parezca clicable */
+      cursor: pointer;
     }
 
-    /* Botón texto del footer (sin cambiar diseño) */
     .footer-btn {
       background: none;
       border: none;
@@ -536,7 +486,6 @@
     }
     .footer-btn:focus { outline: none; }
 
-    /* Panel administrador */
     #admin-panel {
       position: fixed;
       bottom: 14px;
@@ -633,29 +582,30 @@
 <body>
   <main>
     <div class="content">
-      <section class="banner">
-        <img src="logo.jpeg" alt="Apuestas Martin's" class="banner-img">
-      </section>
 
       <header class="header-brand">
         <div class="logo">
-          <div class="logo-mark-img">
-            <img src="dino.jpg" alt="Dino Martin's">
+          <div class="logo-mark-img" data-swap="true">
+            <img
+              src="dino.jpg"
+              alt="Apuestas Martin's"
+              class="swap-single"
+              data-src-a="dino.jpg"
+              data-src-b="logo.jpeg"
+            >
           </div>
           <div>
             <div class="logo-text-main">Apuestas Martin's</div>
             <div class="logo-text-sub">Boletas Chontico</div>
           </div>
         </div>
-        <!-- ELIMINADO (tachado): bloque +18 / Solo mayores de edad -->
       </header>
 
       <section class="hero">
         <div class="hero-left">
           <div class="eyebrow"><span>Boletas Chontico</span></div>
           <h2 class="title">
-            Valores en <strong>CLP<span class="flag">🇨🇱</span></strong> y
-            <strong>COP<span class="flag">🇨🇴</span></strong>.
+            Juega en <strong>COP<span class="flag">🇨🇴</span></strong> y <strong>CLP<span class="flag">🇨🇱</span></strong>.
           </h2>
         </div>
         <aside class="hero-right">
@@ -678,7 +628,6 @@
       <section class="finder-section">
         <div class="finder-header">
           <h3 class="finder-title">Número de boleta</h3>
-          <!-- ELIMINADO (tachado): texto de ayuda -->
         </div>
 
         <div class="finder-controls-row">
@@ -689,8 +638,14 @@
         </div>
 
         <div class="finder-actions">
-          <div class="dino-inline-img">
-            <img src="dino.jpg" alt="Dino Martin's">
+          <div class="dino-inline-img" data-swap="true" title="Mantén el cursor aquí para cambiar la imagen">
+            <img
+              src="dino.jpg"
+              alt="Apuestas Martin's"
+              class="swap-single"
+              data-src-a="dino.jpg"
+              data-src-b="logo.jpeg"
+            >
           </div>
           <a
             href="https://wa.me/573125172779?text=Hola%2C%20quiero%20ayuda%20con%20las%20boletas%20de%20Chontico."
@@ -709,13 +664,11 @@
                 <th>Nombre</th>
                 <th style="width:150px;">Celular</th>
                 <th style="width:110px;">Estado</th>
-                <th style="width:110px;">Acción</th>
               </tr>
             </thead>
             <tbody id="tickets-table-body"></tbody>
           </table>
         </div>
-        <!-- ELIMINADO (tachado): texto inferior de celular -->
       </section>
 
       <section class="payments">
@@ -759,7 +712,6 @@
         </div>
       </section>
 
-      <!-- Frase que ahora sirve como botón oculto de administrador -->
       <footer class="footer" id="admin-footer-trigger">
         <button type="button" class="footer-btn">Apuestas Martin's</button>
       </footer>
@@ -925,9 +877,7 @@
 
       function validatePhone(value) {
         const clean = value.replace(/\D/g, "");
-        if (clean.length === 9 || clean.length === 10) {
-          return clean;
-        }
+        if (clean.length === 9 || clean.length === 10) return clean;
         return null;
       }
 
@@ -969,16 +919,6 @@
         inputCel.type = "tel";
         inputCel.className = "cell-input";
         inputCel.placeholder = "9 o 10 dígitos";
-        if (registro.estado === ESTADOS.DISPONIBLE) {
-          inputCel.value = registro.celular || "";
-        } else {
-          inputCel.value = "";
-          inputCel.style.display = "none";
-          const spanInfo = document.createElement("div");
-          spanInfo.className = "hint-cell";
-          spanInfo.textContent = "Registrado";
-          tdCel.appendChild(spanInfo);
-        }
         tdCel.appendChild(inputCel);
 
         const tdEstado = document.createElement("td");
@@ -987,52 +927,63 @@
         spanEstado.textContent = statusToText(registro.estado);
         tdEstado.appendChild(spanEstado);
 
-        const tdAccion = document.createElement("td");
-        const btnAccion = document.createElement("button");
-        btnAccion.type = "button";
-        btnAccion.className = "btn-row";
-        btnAccion.textContent = "Apartar";
-
-        if (registro.estado !== ESTADOS.DISPONIBLE) {
-          if (registro.estado === ESTADOS.RESERVADO) btnAccion.textContent = "Reservado";
-          else if (registro.estado === ESTADOS.PAGADO) btnAccion.textContent = "Pagado";
-          else if (registro.estado === ESTADOS.ABONADO) btnAccion.textContent = "Abonado";
-          btnAccion.classList.add("disabled");
-        }
-        tdAccion.appendChild(btnAccion);
-
         tr.appendChild(tdNum);
         tr.appendChild(tdNombre);
         tr.appendChild(tdCel);
         tr.appendChild(tdEstado);
-        tr.appendChild(tdAccion);
 
-        // Regla: ABONADO no puede ser modificado ni reservado por clientes
-        if (registro.estado === ESTADOS.ABONADO) {
+        // UI según estado
+        if (registro.estado === ESTADOS.DISPONIBLE) {
+          inputCel.value = registro.celular || "";
+          inputNombre.disabled = false;
+          inputCel.disabled = false;
+        } else {
+          // Cuando está Reservado/Pagado/Abonado: usuario no puede editar ni ver cel
           inputNombre.disabled = true;
           inputCel.disabled = true;
+          inputCel.value = "";
+          inputCel.style.display = "none";
+          const spanInfo = document.createElement("div");
+          spanInfo.className = "hint-cell";
+          spanInfo.textContent = "Registrado";
+          tdCel.appendChild(spanInfo);
         }
 
+        // Selección visual por número
         numBtn.addEventListener("click", function () {
           selectedIndex = index;
           highlightSelected();
         });
 
-        btnAccion.addEventListener("click", function () {
+        // Guardar cambios de inputs SOLO si está Disponible
+        inputNombre.addEventListener("change", function () {
           if (registro.estado !== ESTADOS.DISPONIBLE) return;
-          if (registro.estado === ESTADOS.ABONADO) return;
+          registro.nombre = inputNombre.value.trim();
+          writeRegistro(tipoId, diaId, index);
+        });
 
-          const nombre = inputNombre.value.trim();
+        inputCel.addEventListener("change", function () {
+          if (registro.estado !== ESTADOS.DISPONIBLE) return;
+          registro.celular = inputCel.value.trim();
+          writeRegistro(tipoId, diaId, index);
+        });
+
+        // ACCIÓN ahora en ESTADO: clic en "Disponible" => pasa a "Reservado"
+        spanEstado.addEventListener("click", function () {
+          if (registro.estado !== ESTADOS.DISPONIBLE) return;
+
+          const nombre = (inputNombre.value || "").trim();
           if (!nombre) {
             alert("Por favor escribe un nombre para apartar la boleta.");
             return;
           }
 
-          const celRaw = inputCel.value.trim();
+          const celRaw = (inputCel.value || "").trim();
           if (!celRaw) {
             alert("Por favor escribe el celular (9 dígitos Chile o 10 dígitos Colombia).");
             return;
           }
+
           const celValid = validatePhone(celRaw);
           if (!celValid) {
             alert("El celular debe tener 9 dígitos (Chile) o 10 dígitos (Colombia), solo números.");
@@ -1046,20 +997,6 @@
           writeRegistro(tipoId, diaId, index);
         });
 
-        inputNombre.addEventListener("change", function () {
-          if (registro.estado === ESTADOS.ABONADO) return;
-          registro.nombre = inputNombre.value.trim();
-          writeRegistro(tipoId, diaId, index);
-        });
-
-        inputCel.addEventListener("change", function () {
-          if (registro.estado === ESTADOS.ABONADO) return;
-          if (registro.estado === ESTADOS.DISPONIBLE) {
-            registro.celular = inputCel.value.trim();
-            writeRegistro(tipoId, diaId, index);
-          }
-        });
-
         return tr;
       }
 
@@ -1069,11 +1006,8 @@
           const idx = parseInt(row.dataset.index, 10);
           const pill = row.querySelector(".num-pill");
           if (!pill) return;
-          if (selectedIndex === idx) {
-            pill.classList.add("selected");
-          } else {
-            pill.classList.remove("selected");
-          }
+          if (selectedIndex === idx) pill.classList.add("selected");
+          else pill.classList.remove("selected");
         });
       }
 
@@ -1196,17 +1130,9 @@
         writeRegistro(tId, dId, idx);
       });
 
-      adminReservado.addEventListener("click", function () {
-        adminSetEstado(ESTADOS.RESERVADO);
-      });
-
-      adminPagado.addEventListener("click", function () {
-        adminSetEstado(ESTADOS.PAGADO);
-      });
-
-      adminAbonado.addEventListener("click", function () {
-        adminSetEstado(ESTADOS.ABONADO);
-      });
+      adminReservado.addEventListener("click", function () { adminSetEstado(ESTADOS.RESERVADO); });
+      adminPagado.addEventListener("click", function () { adminSetEstado(ESTADOS.PAGADO); });
+      adminAbonado.addEventListener("click", function () { adminSetEstado(ESTADOS.ABONADO); });
 
       adminClearName.addEventListener("click", function () {
         const tId = currentAdminTipo();
@@ -1264,7 +1190,6 @@
           return;
         }
 
-        // Regla: ABONADO NO se borra con reiniciar semana.
         const fresh = buildDefaultData();
         TIPOS.forEach(t => {
           DIAS.forEach(d => {
@@ -1302,13 +1227,8 @@
         toggleAdminPanel(true);
       }
 
-      adminTrigger.addEventListener("click", function () {
-        openAdminWithAuth();
-      });
-
-      adminClose.addEventListener("click", function () {
-        toggleAdminPanel(false);
-      });
+      adminTrigger.addEventListener("click", function () { openAdminWithAuth(); });
+      adminClose.addEventListener("click", function () { toggleAdminPanel(false); });
 
       document.addEventListener("keydown", function (e) {
         if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
@@ -1317,7 +1237,53 @@
         }
       });
 
+      /* Swap de imágenes: solo mientras el usuario está encima (hover/touch) */
+      function setupSwap(container, intervalMs) {
+        const img = container.querySelector("img.swap-single");
+        if (!img) return;
+
+        const a = img.getAttribute("data-src-a");
+        const b = img.getAttribute("data-src-b");
+        if (!a || !b) return;
+
+        let showingA = true;
+        let timer = null;
+
+        function setSrc() {
+          img.src = showingA ? a : b;
+        }
+
+        function start() {
+          if (timer) return;
+          timer = setInterval(function () {
+            showingA = !showingA;
+            setSrc();
+          }, intervalMs);
+        }
+
+        function stop() {
+          if (timer) clearInterval(timer);
+          timer = null;
+          showingA = true;
+          setSrc();
+        }
+
+        container.addEventListener("mouseenter", start);
+        container.addEventListener("mouseleave", stop);
+
+        container.addEventListener("click", function () {
+          if (timer) stop();
+          else start();
+        });
+
+        setSrc();
+      }
+
       function init() {
+        document.querySelectorAll("[data-swap='true']").forEach(function (el) {
+          setupSwap(el, 2500);
+        });
+
         initSelectors();
         data = buildDefaultData();
         ready = true;
