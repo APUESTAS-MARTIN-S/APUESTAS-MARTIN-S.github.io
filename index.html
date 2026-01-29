@@ -86,17 +86,17 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    /* TÍTULO + LOGO MÁS GRANDES Y VISTOSOS */
+    /* FOTO "3x4" EN EL TÍTULO (más grande) */
     .logo-mark-img {
-      width: 46px;
-      height: 46px;
-      border-radius: 999px;
+      width: 58px;              /* 3:4 aprox */
+      height: 78px;
+      border-radius: 14px;      /* deja de ser círculo, tipo foto */
       overflow: hidden;
       border: 1px solid rgba(34,197,94,0.75);
-      box-shadow: 0 0 0 1px rgba(3,24,17,0.9), 0 10px 22px rgba(2,23,16,0.75);
+      box-shadow: 0 0 0 1px rgba(3,24,17,0.9), 0 12px 26px rgba(2,23,16,0.75);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -120,16 +120,10 @@
       text-shadow: 0 10px 20px rgba(1,15,11,0.45);
     }
 
-    .logo-text-sub {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
     @media (max-width: 640px) {
       .header-brand { flex-direction: column; align-items: flex-start; }
       .logo-text-main { font-size: 21px; }
-      .logo-mark-img { width: 44px; height: 44px; }
+      .logo-mark-img { width: 56px; height: 76px; }
     }
 
     .hero {
@@ -149,20 +143,20 @@
       gap: 8px;
     }
 
-    .hero-right-title { font-size: 13px; color: var(--text-muted); margin-bottom: 2px; }
-
     .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
 
     .pill {
-      padding: 6px 10px;
-      border-radius: 999px;
+      padding: 10px 12px;
+      border-radius: 16px;
       background: rgba(1,17,13,1);
       border: 1px solid rgba(22,163,74,0.6);
-      font-size: 11px;
+      font-size: 12px;
       color: #e5e7eb;
+      line-height: 1.45;
+      width: 100%;
     }
 
-    .pill strong { color: var(--accent); font-weight: 600; }
+    .pill strong { color: var(--accent); font-weight: 700; }
 
     .finder-section {
       background: rgba(1,17,13,0.98);
@@ -213,10 +207,7 @@
 
     .schedule-head strong { color: #e5e7eb; font-weight: 700; }
 
-    .schedule-row {
-      border-bottom: 1px solid rgba(34,197,94,0.12);
-    }
-
+    .schedule-row { border-bottom: 1px solid rgba(34,197,94,0.12); }
     .schedule-row:last-child { border-bottom: none; }
 
     .schedule-day {
@@ -251,11 +242,18 @@
       background: rgba(6,95,70,0.45);
     }
 
+    /* DÍAS BLOQUEADOS (cliente) */
+    .schedule-btn.blocked,
+    .schedule-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
     @media (max-width: 640px) {
       .schedule-head,
-      .schedule-row {
-        grid-template-columns: 1fr;
-      }
+      .schedule-row { grid-template-columns: 1fr; }
       .schedule-head { gap: 4px; }
       .schedule-row { gap: 8px; }
       .schedule-day { margin-bottom: 2px; }
@@ -271,30 +269,6 @@
       align-items: center;
       margin-bottom: 10px;
     }
-
-    /* --- FIX: reservar espacio estable usando el tamaño/aspecto del DINO --- */
-    .dino-inline-img {
-      max-width: 230px;
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid rgba(34,197,94,0.7);
-      box-shadow: 0 10px 22px rgba(2,23,16,0.9);
-      background: #022c22;
-      cursor: pointer;
-
-      /* fallback: si JS no puede medir el dino, usa un aspecto alto (no habrá “salto” al crecer) */
-      aspect-ratio: 4 / 5;
-      display: block;
-    }
-
-    .dino-inline-img img {
-      width: 100%;
-      height: 100%;          /* clave: que no cambie la altura al cambiar de imagen */
-      display: block;
-      object-fit: cover;      /* mantiene el recorte, evita cambios de layout */
-    }
-    /* --------------------------------------------------------------- */
 
     .btn {
       display: inline-flex;
@@ -376,9 +350,7 @@
       color: #f9fafb;
     }
 
-    .num-pill.selected {
-      box-shadow: 0 0 0 2px #ecfeff, 0 0 0 3px #22c55e;
-    }
+    .num-pill.selected { box-shadow: 0 0 0 2px #ecfeff, 0 0 0 3px #22c55e; }
 
     .cell-input {
       width: 100%;
@@ -416,9 +388,7 @@
 
     .badge-status.reservado,
     .badge-status.pagado,
-    .badge-status.abonado {
-      cursor: default;
-    }
+    .badge-status.abonado { cursor: default; }
 
     .badge-status.reservado {
       background: rgba(251,191,36,0.16);
@@ -482,10 +452,7 @@
       line-height: 1.4;
     }
 
-    .payments-list-vertical strong {
-      display: block;
-      margin-bottom: 2px;
-    }
+    .payments-list-vertical strong { display: block; margin-bottom: 2px; }
 
     .payments-note-small {
       font-size: 11px;
@@ -574,6 +541,68 @@
 
     .admin-btn-small:hover { background: #022c22; }
 
+    /* Bloqueo de días (admin) */
+    .admin-days-title {
+      font-weight: 600;
+      margin: 8px 0 4px;
+    }
+    .admin-days-note {
+      color: var(--text-muted);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+    .admin-days-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    .admin-day-btn {
+      padding: 6px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.55);
+      background: #02130f;
+      color: #e5e7eb;
+      font-size: 11px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .admin-day-btn:hover { background: #022c22; }
+    .admin-day-btn.blocked {
+      border-color: rgba(250,204,21,0.85);
+      color: #fef3c7;
+      background: rgba(251,191,36,0.12);
+    }
+
+    /* Especial (admin) */
+    .admin-special {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    #admin-special-toggle {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.7);
+      background: #02130f;
+      color: #e5e7eb;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    #admin-special-toggle.on {
+      border-color: rgba(34,197,94,0.95);
+      box-shadow: 0 0 0 2px rgba(236,254,255,0.9), 0 0 0 3px rgba(34,197,94,0.95);
+      background: rgba(6,95,70,0.35);
+      color: #bbf7d0;
+    }
+    #admin-special-state {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
     #admin-export,
     #admin-reset-week {
       width: 100%;
@@ -602,6 +631,65 @@
     }
 
     #admin-close:hover { color: #e5e7eb; }
+
+    /* MODAL ESPECIAL */
+    #special-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+    #special-modal[aria-hidden="false"] { display: flex; }
+
+    .special-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(2px);
+    }
+    .special-card {
+      position: relative;
+      width: min(420px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(34,197,94,0.55);
+      background: rgba(1,17,13,0.98);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .special-close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(2,15,11,0.6);
+      color: #e5e7eb;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      z-index: 2;
+    }
+    .special-close:hover { background: rgba(2,15,11,0.9); }
+
+    .special-img {
+      width: 100%;
+      display: block;
+      max-height: 360px;
+      object-fit: cover;
+    }
+
+    .special-actions {
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -621,25 +709,21 @@
           </div>
           <div>
             <div class="logo-text-main">Apuestas Martin's</div>
-            <div class="logo-text-sub">Boletas Chontico</div>
+            <!-- (1) Se quitó "Boletas Chontico" -->
           </div>
         </div>
       </header>
 
-      <!-- Se eliminó el texto superior: "Boletas Chontico" + "Juega en COP y CLP" -->
       <section class="hero">
         <aside class="hero-right">
-          <div class="hero-right-title">Valores por tipo de boleta</div>
+          <!-- (2) Se quitó "Valores por tipo de boleta" -->
           <div class="pill-row">
             <div class="pill">
-              <strong>CHONTICO DÍA</strong><br>
-              Lunes a Sábado: $2.000 CLP · $8.000 COP<br>
-              Domingo: $1.000 CLP · $4.000 COP
-            </div>
-            <div class="pill">
-              <strong>CHONTICO NOCHE</strong><br>
-              Lunes a Viernes: $2.000 CLP · $8.000 COP<br>
-              Sábado y Domingo: $3.000 CLP · $12.000 COP
+              <strong>Lunes a sábado día</strong> $2.000 - $8.000<br>
+              <strong>Lunes a viernes noche</strong> $2.000 - $8.000<br>
+              <strong>Sábado noche</strong> $3.000<br>
+              <strong>Domingo día</strong> $1.000 - $4.000<br>
+              <strong>Domingo noche</strong> $2.000
             </div>
           </div>
         </aside>
@@ -710,15 +794,6 @@
         </div>
 
         <div class="finder-actions">
-          <div class="dino-inline-img" data-swap="true" title="Toca/clic para pausar/reanudar">
-            <img
-              src="dino.jpg"
-              alt="Apuestas Martin's"
-              class="swap-single"
-              data-src-a="dino.jpg"
-              data-src-b="logo.jpeg"
-            >
-          </div>
           <a
             href="https://wa.me/573125172779?text=Hola%2C%20quiero%20ayuda%20con%20las%20boletas%20de%20Chontico."
             target="_blank"
@@ -790,6 +865,25 @@
     </div>
   </main>
 
+  <!-- MODAL ESPECIAL (para todos cuando esté activo) -->
+  <div id="special-modal" aria-hidden="true">
+    <div class="special-backdrop" id="special-backdrop"></div>
+    <div class="special-card" role="dialog" aria-modal="true" aria-label="Especial">
+      <button type="button" class="special-close" id="special-close" title="Cerrar">×</button>
+      <img src="emergente.png" alt="Especial" class="special-img">
+      <div class="special-actions">
+        <a
+          id="special-whatsapp"
+          href="https://wa.me/573125172779?text=quiero%20saber%20mas%20del%20especial"
+          target="_blank"
+          class="btn btn-primary"
+        >
+          Quiero saber más
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Panel administrador -->
   <div id="admin-panel" aria-hidden="true">
     <button id="admin-close" type="button" title="Cerrar">×</button>
@@ -813,6 +907,25 @@
     <button id="admin-clear-name" class="admin-btn-small" style="width:100%; margin-bottom:6px;">
       Borrar nombre y celular
     </button>
+
+    <!-- BLOQUEO DE DÍAS -->
+    <div class="admin-days-title">Bloquear días (clientes)</div>
+    <div class="admin-days-note">Toca un día para bloquear/desbloquear. Bloqueado = clientes no pueden elegir ese día.</div>
+    <div class="admin-days-grid" id="admin-days-grid">
+      <button type="button" class="admin-day-btn" data-dia="lun">Lun</button>
+      <button type="button" class="admin-day-btn" data-dia="mar">Mar</button>
+      <button type="button" class="admin-day-btn" data-dia="mie">Mié</button>
+      <button type="button" class="admin-day-btn" data-dia="jue">Jue</button>
+      <button type="button" class="admin-day-btn" data-dia="vie">Vie</button>
+      <button type="button" class="admin-day-btn" data-dia="sab">Sáb</button>
+      <button type="button" class="admin-day-btn" data-dia="dom">Dom</button>
+    </div>
+
+    <!-- (4) ESPECIAL (admin) -->
+    <div class="admin-special">
+      <button id="admin-special-toggle" type="button">Especial</button>
+      <div id="admin-special-state">Estado: cargando…</div>
+    </div>
 
     <button id="admin-reset-week">Reiniciar semana (todo disponible)</button>
     <button id="admin-export">Descargar CSV (Excel)</button>
@@ -881,10 +994,27 @@
       const adminResetWeek = document.getElementById("admin-reset-week");
       const adminClose = document.getElementById("admin-close");
 
+      const adminDaysGrid = document.getElementById("admin-days-grid");
+
+      // Especial (modal + admin)
+      const adminSpecialToggle = document.getElementById("admin-special-toggle");
+      const adminSpecialState = document.getElementById("admin-special-state");
+      const specialModal = document.getElementById("special-modal");
+      const specialClose = document.getElementById("special-close");
+      const specialBackdrop = document.getElementById("special-backdrop");
+
       let data = {};
       let selectedIndex = null;
       let ready = false;
       let adminUnlocked = false;
+
+      /* DÍAS BLOQUEADOS (guardado en Firebase: settings/blockedDays/<dia>) */
+      let blockedDays = {
+        lun: false, mar: false, mie: false, jue: false, vie: false, sab: false, dom: false
+      };
+
+      /* ESPECIAL (guardado en Firebase: settings/specialEnabled) */
+      let specialEnabled = false;
 
       function formatNumber(n) {
         return n.toString().padStart(2, "0");
@@ -1139,15 +1269,56 @@
         });
       }
 
+      function applyBlockedDaysToUI() {
+        if (schedulePicker) {
+          const btns = schedulePicker.querySelectorAll(".schedule-btn");
+          btns.forEach(b => {
+            const d = b.getAttribute("data-dia");
+            const isBlocked = !!blockedDays[d];
+            b.disabled = isBlocked;
+            if (isBlocked) b.classList.add("blocked");
+            else b.classList.remove("blocked");
+          });
+        }
+
+        if (adminDaysGrid) {
+          const adminBtns = adminDaysGrid.querySelectorAll(".admin-day-btn");
+          adminBtns.forEach(b => {
+            const d = b.getAttribute("data-dia");
+            const isBlocked = !!blockedDays[d];
+            if (isBlocked) b.classList.add("blocked");
+            else b.classList.remove("blocked");
+          });
+        }
+      }
+
+      function pickFirstAvailableIfCurrentBlocked() {
+        const dId = currentDiaId();
+        if (!blockedDays[dId]) return;
+
+        for (let i = 0; i < DIAS.length; i++) {
+          const dayId = DIAS[i].id;
+          if (!blockedDays[dayId]) {
+            diaSelect.value = dayId;
+            clearSelection();
+            rebuildTable();
+            setActiveScheduleUI(currentTipoId(), dayId);
+            return;
+          }
+        }
+      }
+
       function bindSchedulePicker() {
         if (!schedulePicker) return;
         schedulePicker.addEventListener("click", function (e) {
           const target = e.target;
           if (!target || !target.classList || !target.classList.contains("schedule-btn")) return;
+          if (target.disabled) return;
 
           const tipoId = target.getAttribute("data-tipo");
           const diaId = target.getAttribute("data-dia");
           if (!tipoId || !diaId) return;
+          if (blockedDays[diaId]) return;
 
           tipoSelect.value = tipoId;
           diaSelect.value = diaId;
@@ -1155,6 +1326,27 @@
           clearSelection();
           rebuildTable();
           setActiveScheduleUI(tipoId, diaId);
+        });
+      }
+
+      function bindAdminDayBlocking() {
+        if (!adminDaysGrid) return;
+
+        adminDaysGrid.addEventListener("click", function (e) {
+          const target = e.target;
+          if (!target || !target.classList || !target.classList.contains("admin-day-btn")) return;
+
+          const diaId = target.getAttribute("data-dia");
+          if (!diaId) return;
+
+          const newValue = !blockedDays[diaId];
+
+          db.ref("settings/blockedDays/" + diaId)
+            .set(newValue)
+            .catch(function (error) {
+              console.error("Error al guardar bloqueo de día:", error);
+              alert("No se pudo guardar el bloqueo del día. Revisa reglas/conexión.");
+            });
         });
       }
 
@@ -1196,7 +1388,6 @@
         adminDiaSelect.value = DIAS[0].id;
         adminSelect.value = "0";
 
-        /* Se mantienen listeners por compatibilidad */
         tipoSelect.addEventListener("change", function () {
           clearSelection();
           rebuildTable();
@@ -1331,10 +1522,7 @@
         }
       });
 
-      /* FIX:
-         1) Intercala SIEMPRE (PC sin hover, móvil también).
-         2) Fija el tamaño usando el aspect-ratio REAL del DINO (data-src-a).
-         3) Click/tap pausa/reanuda para que el usuario tenga control. */
+      /* Intercala SIEMPRE (solo en el logo de arriba). Click/tap pausa/reanuda */
       function setupSwap(container, intervalMs) {
         const img = container.querySelector("img.swap-single");
         if (!img) return;
@@ -1367,8 +1555,7 @@
           }
         }
 
-        // Medir el DINO y reservar ese espacio (evita saltos de layout)
-        (function lockAspectToDino() {
+        (function lockAspectToA() {
           const probe = new Image();
           probe.onload = function () {
             if (probe.naturalWidth && probe.naturalHeight) {
@@ -1378,10 +1565,8 @@
           probe.src = a;
         })();
 
-        // Si el usuario prefiere menos animación, no auto-ciclamos (solo con click)
         const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-        // Click/tap: pausa/reanuda (no depende de hover)
         container.addEventListener("click", function () {
           if (timer) stop(true);
           else start();
@@ -1391,6 +1576,76 @@
         if (!reduceMotion) start();
       }
 
+      // ---- ESPECIAL (modal) ----
+      function showSpecialModal() {
+        if (!specialModal) return;
+        if (sessionStorage.getItem("specialDismissed") === "1") return;
+        specialModal.setAttribute("aria-hidden", "false");
+      }
+
+      function hideSpecialModal(setDismissed) {
+        if (!specialModal) return;
+        specialModal.setAttribute("aria-hidden", "true");
+        if (setDismissed) sessionStorage.setItem("specialDismissed", "1");
+      }
+
+      function bindSpecialModalClose() {
+        if (specialClose) specialClose.addEventListener("click", function () { hideSpecialModal(true); });
+        if (specialBackdrop) specialBackdrop.addEventListener("click", function () { hideSpecialModal(true); });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") hideSpecialModal(true);
+        });
+      }
+
+      function updateAdminSpecialUI() {
+        if (!adminSpecialToggle || !adminSpecialState) return;
+        adminSpecialToggle.classList.toggle("on", !!specialEnabled);
+        adminSpecialState.textContent = "Estado: " + (specialEnabled ? "ACTIVO" : "INACTIVO");
+      }
+
+      function bindAdminSpecialToggle() {
+        if (!adminSpecialToggle) return;
+        adminSpecialToggle.addEventListener("click", function () {
+          const next = !specialEnabled;
+          db.ref("settings/specialEnabled")
+            .set(next)
+            .catch(function (error) {
+              console.error("Error al guardar specialEnabled:", error);
+              alert("No se pudo activar/desactivar el Especial. Revisa reglas/conexión.");
+            });
+        });
+      }
+
+      function listenSpecialEnabled() {
+        db.ref("settings/specialEnabled").on("value", function (snapshot) {
+          specialEnabled = !!snapshot.val();
+          updateAdminSpecialUI();
+
+          if (!specialEnabled) {
+            // Al desactivar, ocultar y permitir que vuelva a aparecer cuando se active
+            sessionStorage.removeItem("specialDismissed");
+            hideSpecialModal(false);
+            return;
+          }
+
+          // Al activar, mostrar (a quienes entren / refresquen)
+          showSpecialModal();
+        });
+      }
+      // --------------------------
+
+      function listenBlockedDays() {
+        db.ref("settings/blockedDays").on("value", function (snapshot) {
+          const val = snapshot.val() || {};
+          blockedDays = {
+            lun: !!val.lun, mar: !!val.mar, mie: !!val.mie, jue: !!val.jue,
+            vie: !!val.vie, sab: !!val.sab, dom: !!val.dom
+          };
+          applyBlockedDaysToUI();
+          pickFirstAvailableIfCurrentBlocked();
+        });
+      }
+
       function init() {
         document.querySelectorAll("[data-swap='true']").forEach(function (el) {
           setupSwap(el, 2500);
@@ -1398,13 +1653,19 @@
 
         initSelectors();
         bindSchedulePicker();
+        bindAdminDayBlocking();
+
+        bindSpecialModalClose();
+        bindAdminSpecialToggle();
 
         data = buildDefaultData();
         ready = true;
         rebuildTable();
 
-        // Activar el botón visual por defecto (Lunes Día)
         setActiveScheduleUI(currentTipoId(), currentDiaId());
+
+        listenBlockedDays();
+        listenSpecialEnabled();
 
         db.ref("boletas").on("value", function (snapshot) {
           data = mergeRemote(snapshot.val());
