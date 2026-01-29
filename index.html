@@ -678,11 +678,13 @@
     }
     .special-close:hover { background: rgba(2,15,11,0.9); }
 
+    /* ✅ ARREGLO: mostrar la imagen completa (sin zoom/recorte) */
     .special-img {
       width: 100%;
       display: block;
-      max-height: 360px;
-      object-fit: cover;
+      max-height: 70vh;     /* cabe en pantalla */
+      object-fit: contain;  /* NO recorta, se ve completa */
+      background: #020f0b;  /* relleno alrededor si sobra espacio */
     }
 
     .special-actions {
@@ -709,14 +711,12 @@
           </div>
           <div>
             <div class="logo-text-main">Apuestas Martin's</div>
-            <!-- (1) Se quitó "Boletas Chontico" -->
           </div>
         </div>
       </header>
 
       <section class="hero">
         <aside class="hero-right">
-          <!-- (2) Se quitó "Valores por tipo de boleta" -->
           <div class="pill-row">
             <div class="pill">
               <strong>Lunes a sábado día</strong> $2.000 - $8.000<br>
@@ -921,7 +921,7 @@
       <button type="button" class="admin-day-btn" data-dia="dom">Dom</button>
     </div>
 
-    <!-- (4) ESPECIAL (admin) -->
+    <!-- ESPECIAL (admin) -->
     <div class="admin-special">
       <button id="admin-special-toggle" type="button">Especial</button>
       <div id="admin-special-state">Estado: cargando…</div>
@@ -1622,13 +1622,11 @@
           updateAdminSpecialUI();
 
           if (!specialEnabled) {
-            // Al desactivar, ocultar y permitir que vuelva a aparecer cuando se active
             sessionStorage.removeItem("specialDismissed");
             hideSpecialModal(false);
             return;
           }
 
-          // Al activar, mostrar (a quienes entren / refresquen)
           showSpecialModal();
         });
       }
